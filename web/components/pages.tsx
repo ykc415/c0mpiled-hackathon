@@ -101,7 +101,7 @@ export function Trending() {
   return (
     <section className="trending">
       <h1>
-        <span aria-hidden="true">🔥</span> {t("트렌딩 데모")}
+        <span aria-hidden="true">🔥</span> {t("트렌딩")}
       </h1>
       <ol className="trending-list">
         {list.map(({ app, score }, i) => {

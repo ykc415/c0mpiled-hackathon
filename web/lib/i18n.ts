@@ -30,7 +30,6 @@ const EN: Record<string, string> = {
   트렌딩: "Trending",
 
   // Trending
-  "트렌딩 데모": "Trending Demos",
   "{n}위": "Rank {n}",
   "체험 {n}회": "{n} tries",
   자세히: "Detail",
