@@ -64,3 +64,25 @@ a.text-button{display:inline-flex;align-items:center}
   .category-cloud::-webkit-scrollbar{display:none}
   .category-pill{flex:none}
 }
+
+/* Feed paging: the next app pushes the current one out, clipped to the reel's own frame. */
+:root{--ease-drawer:cubic-bezier(0.32,0.72,0,1);--feed-slide:400ms}
+::view-transition{pointer-events:none}
+/* The action rail glides to its new spot (wide ↔ tall reels) and stays above the sliding card. */
+.reel-side{view-transition-name:reel-side}
+::view-transition-group(reel-side){animation-duration:var(--feed-slide);animation-timing-function:var(--ease-drawer)}
+::view-transition-image-pair(.feed-next),::view-transition-image-pair(.feed-prev){overflow:clip}
+::view-transition-old(.feed-next){animation:var(--feed-slide) var(--ease-drawer) both feed-out-up}
+::view-transition-new(.feed-next){animation:var(--feed-slide) var(--ease-drawer) both feed-in-up}
+::view-transition-old(.feed-prev){animation:var(--feed-slide) var(--ease-drawer) both feed-out-down}
+::view-transition-new(.feed-prev){animation:var(--feed-slide) var(--ease-drawer) both feed-in-down}
+@keyframes feed-out-up{to{translate:0 -100%}}
+@keyframes feed-in-up{from{translate:0 100%}}
+@keyframes feed-out-down{to{translate:0 100%}}
+@keyframes feed-in-down{from{translate:0 -100%}}
+@media(prefers-reduced-motion:reduce){
+  ::view-transition-old(.feed-next),::view-transition-old(.feed-prev){animation-name:feed-fade-out}
+  ::view-transition-new(.feed-next),::view-transition-new(.feed-prev){animation-name:feed-fade-in}
+}
+@keyframes feed-fade-out{to{opacity:0}}
+@keyframes feed-fade-in{from{opacity:0}}

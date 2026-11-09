@@ -1,13 +1,23 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useEffectEvent, useRef } from "react";
+import {
+  addTransitionType,
+  startTransition,
+  useEffect,
+  useEffectEvent,
+  useRef,
+  ViewTransition,
+} from "react";
 import { filterProducts, PRODUCTS } from "@/lib/products";
 import { useStore } from "@/lib/store";
 import { AppCta, AppIcon, AppImage } from "./app-media";
 import { CategoryPills } from "./category-pills";
 import { Icon } from "./icon";
 import { CommentsModal, ShareModal } from "./modals";
+
+// Only feed paging slides; category changes and route navigations swap instantly.
+const FEED_SLIDE = { "feed-next": "feed-next", "feed-prev": "feed-prev", default: "none" };
 
 export function Feed() {
   const store = useStore();
@@ -22,8 +32,11 @@ export function Feed() {
   const moveApp = (dir: number) => {
     const next = list[index + dir];
     if (!next) return;
-    setFeedAppId(next.id);
-    setShot(1);
+    startTransition(() => {
+      addTransitionType(dir > 0 ? "feed-next" : "feed-prev");
+      setFeedAppId(next.id);
+      setShot(1);
+    });
   };
   const onWheelMove = useEffectEvent(moveApp);
 
@@ -88,54 +101,56 @@ export function Feed() {
         className={`reel-layout${image.width > image.height ? " wide-reel" : ""}`}
         aria-label="앱 피드"
       >
-        <div className="reel-column">
-          <div className="reel-player">
-            <Link
-              className="reel-image-button"
-              href={`/apps/${app.id}`}
-              aria-label={`${app.name} 상세 보기`}
-            >
-              <AppImage app={app} index={shotIndex} className="reel-image" priority />
-            </Link>
+        <ViewTransition key={app.id} enter={FEED_SLIDE} exit={FEED_SLIDE} default="none">
+          <div className="reel-column">
+            <div className="reel-player">
+              <Link
+                className="reel-image-button"
+                href={`/apps/${app.id}`}
+                aria-label={`${app.name} 상세 보기`}
+              >
+                <AppImage app={app} index={shotIndex} className="reel-image" priority />
+              </Link>
+            </div>
+            <div className="feed-app-info">
+              <Link className="reel-app" href={`/apps/${app.id}`}>
+                <AppIcon app={app} />
+                <span>
+                  <strong>{app.name}</strong>
+                  <small>{app.categories.join(" · ")}</small>
+                </span>
+                <Icon name="arrow" />
+              </Link>
+              <p>{app.description}</p>
+            </div>
+            <div className="image-controls">
+              <button
+                type="button"
+                className="text-button"
+                aria-label="이전 이미지"
+                disabled={!multiShot}
+                onClick={() => setShot(shotIndex === 0 ? app.images.length : shotIndex)}
+              >
+                ←
+              </button>
+              <small>
+                {app.label} · {shotIndex + 1}/{app.images.length}
+              </small>
+              <button
+                type="button"
+                className="text-button"
+                aria-label="다음 이미지"
+                disabled={!multiShot}
+                onClick={() => setShot(shotIndex + 1 === app.images.length ? 1 : shotIndex + 2)}
+              >
+                →
+              </button>
+            </div>
+            <div className="reel-try">
+              <AppCta app={app} />
+            </div>
           </div>
-          <div className="feed-app-info">
-            <Link className="reel-app" href={`/apps/${app.id}`}>
-              <AppIcon app={app} />
-              <span>
-                <strong>{app.name}</strong>
-                <small>{app.categories.join(" · ")}</small>
-              </span>
-              <Icon name="arrow" />
-            </Link>
-            <p>{app.description}</p>
-          </div>
-          <div className="image-controls">
-            <button
-              type="button"
-              className="text-button"
-              aria-label="이전 이미지"
-              disabled={!multiShot}
-              onClick={() => setShot(shotIndex === 0 ? app.images.length : shotIndex)}
-            >
-              ←
-            </button>
-            <small>
-              {app.label} · {shotIndex + 1}/{app.images.length}
-            </small>
-            <button
-              type="button"
-              className="text-button"
-              aria-label="다음 이미지"
-              disabled={!multiShot}
-              onClick={() => setShot(shotIndex + 1 === app.images.length ? 1 : shotIndex + 2)}
-            >
-              →
-            </button>
-          </div>
-          <div className="reel-try">
-            <AppCta app={app} />
-          </div>
-        </div>
+        </ViewTransition>
         <div className="reel-side">
           <div className="reel-actions">
             <button
