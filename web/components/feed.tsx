@@ -1,0 +1,208 @@
+"use client";
+
+import Link from "next/link";
+import { useEffect, useEffectEvent, useRef } from "react";
+import { filterProducts, PRODUCTS } from "@/lib/products";
+import { useStore } from "@/lib/store";
+import { AppCta, AppIcon, AppImage } from "./app-media";
+import { CategoryPills } from "./category-pills";
+import { Icon } from "./icon";
+import { CommentsModal, ShareModal } from "./modals";
+
+export function Feed() {
+  const store = useStore();
+  const { category, query, feedAppId, setFeedAppId, shot, setShot } = store;
+  const list = filterProducts(PRODUCTS, category, query);
+  const index = Math.max(0, list.findIndex((p) => p.id === feedAppId));
+  const app = list[index];
+  const hasApp = Boolean(app);
+
+  // Wheel/trackpad gestures move one app at a time, like the arrow buttons.
+  const layoutRef = useRef<HTMLElement>(null);
+  const moveApp = (dir: number) => {
+    const next = list[index + dir];
+    if (!next) return;
+    setFeedAppId(next.id);
+    setShot(1);
+  };
+  const onWheelMove = useEffectEvent(moveApp);
+
+  useEffect(() => {
+    const el = layoutRef.current;
+    if (!el) return;
+    const g = { last: 0, total: 0, direction: 0, consumed: false, lockedUntil: 0 };
+    const onWheel = (e: WheelEvent) => {
+      if (document.querySelector("dialog[open]") || e.ctrlKey || e.metaKey) return;
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY) || !e.deltaY) return;
+      const now = performance.now();
+      const direction = Math.sign(e.deltaY);
+      if (now - g.last > 200 || direction !== g.direction) {
+        g.total = 0;
+        g.consumed = false;
+      }
+      g.last = now;
+      g.direction = direction;
+      // Swallow the rest of one gesture, including trackpad momentum.
+      if (g.consumed || now < g.lockedUntil) {
+        e.preventDefault();
+        return;
+      }
+      e.preventDefault();
+      const unit = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? window.innerHeight : 1;
+      g.total += Math.abs(e.deltaY) * unit;
+      if (g.total < 48) return;
+      g.total = 0;
+      g.consumed = true;
+      g.lockedUntil = now + 450;
+      onWheelMove(direction);
+    };
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => el.removeEventListener("wheel", onWheel);
+  }, [hasApp]);
+
+  if (!app)
+    return (
+      <>
+        <CategoryPills />
+        <div className="empty">
+          <h2>{query ? "검색 결과가 없어요" : "이 카테고리의 앱은 준비 중이에요"}</h2>
+          <p>
+            {query
+              ? "다른 앱 이름이나 카테고리로 찾아보세요."
+              : "선택한 카테고리를 다시 누르면 필터가 해제됩니다."}
+          </p>
+        </div>
+      </>
+    );
+
+  const shotIndex = Math.min(shot, app.images.length) - 1;
+  const image = app.images[shotIndex];
+  const { liked, saved, comments } = store.appState(app.id);
+  const multiShot = app.images.length > 1;
+
+  return (
+    <>
+      <CategoryPills />
+      <section
+        ref={layoutRef}
+        className={`reel-layout${image.width > image.height ? " wide-reel" : ""}`}
+        aria-label="앱 피드"
+      >
+        <div className="reel-column">
+          <div className="reel-player">
+            <Link
+              className="reel-image-button"
+              href={`/apps/${app.id}`}
+              aria-label={`${app.name} 상세 보기`}
+            >
+              <AppImage app={app} index={shotIndex} className="reel-image" priority />
+            </Link>
+          </div>
+          <div className="feed-app-info">
+            <Link className="reel-app" href={`/apps/${app.id}`}>
+              <AppIcon app={app} />
+              <span>
+                <strong>{app.name}</strong>
+                <small>{app.categories.join(" · ")}</small>
+              </span>
+              <Icon name="arrow" />
+            </Link>
+            <p>{app.description}</p>
+          </div>
+          <div className="image-controls">
+            <button
+              type="button"
+              className="text-button"
+              aria-label="이전 이미지"
+              disabled={!multiShot}
+              onClick={() => setShot(shotIndex === 0 ? app.images.length : shotIndex)}
+            >
+              ←
+            </button>
+            <small>
+              {app.label} · {shotIndex + 1}/{app.images.length}
+            </small>
+            <button
+              type="button"
+              className="text-button"
+              aria-label="다음 이미지"
+              disabled={!multiShot}
+              onClick={() => setShot(shotIndex + 1 === app.images.length ? 1 : shotIndex + 2)}
+            >
+              →
+            </button>
+          </div>
+          <div className="reel-try">
+            <AppCta app={app} />
+          </div>
+        </div>
+        <div className="reel-side">
+          <div className="reel-actions">
+            <button
+              type="button"
+              aria-label="좋아요"
+              aria-pressed={liked}
+              onClick={() => store.toggleLiked(app.id)}
+            >
+              <Icon name="heart" />
+              <span>{liked ? "좋아요 취소" : "좋아요"}</span>
+            </button>
+            <button
+              type="button"
+              aria-pressed={saved}
+              onClick={() =>
+                store.toast(
+                  store.toggleSaved(app.id) ? "내 앱에 추가했어요" : "내 앱에서 제거했어요",
+                )
+              }
+            >
+              <Icon name="save" />
+              <span>{saved ? "추가됨" : "내 앱"}</span>
+            </button>
+            <button
+              type="button"
+              onClick={() =>
+                store.openModal("함께 나누는 한마디", <CommentsModal appId={app.id} />)
+              }
+            >
+              <Icon name="comment" />
+              <span>{comments.length || "댓글"}</span>
+            </button>
+            <button
+              type="button"
+              onClick={() =>
+                store.openModal(`${app.name} 공유하기`, <ShareModal appId={app.id} />)
+              }
+            >
+              <Icon name="share" />
+              <span>공유</span>
+            </button>
+          </div>
+          <div className="reel-pager">
+            <button
+              type="button"
+              className="icon-button"
+              aria-label="이전 앱"
+              disabled={index === 0}
+              onClick={() => moveApp(-1)}
+            >
+              ↑
+            </button>
+            <span>
+              {index + 1} / {list.length}
+            </span>
+            <button
+              type="button"
+              className="icon-button"
+              aria-label="다음 앱"
+              disabled={index === list.length - 1}
+              onClick={() => moveApp(1)}
+            >
+              ↓
+            </button>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}
