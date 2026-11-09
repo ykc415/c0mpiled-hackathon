@@ -86,3 +86,7 @@ a.text-button{display:inline-flex;align-items:center}
 }
 @keyframes feed-fade-out{to{opacity:0}}
 @keyframes feed-fade-in{from{opacity:0}}
+
+/* Language switch in the top bar: the active language is lit. */
+.lang-toggle{display:flex;gap:8px;align-items:center;height:36px;padding:0 12px;border:1px solid var(--line);border-radius:999px;font-size:12px;font-weight:700;color:var(--muted);flex:none}
+.lang-toggle [aria-current]{color:var(--lime)}

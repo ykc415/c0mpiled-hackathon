@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ProductDetail } from "@/components/pages";
+import { translate } from "@/lib/i18n";
 import { getProduct, PRODUCTS } from "@/lib/products";
 
 export function generateStaticParams() {
@@ -10,7 +11,7 @@ export function generateStaticParams() {
 export async function generateMetadata(props: PageProps<"/apps/[id]">): Promise<Metadata> {
   const { id } = await props.params;
   const app = getProduct(id);
-  return app ? { title: `${app.name} — Appetizer`, description: app.description } : {};
+  return app ? { title: `${app.name} — Appetizer`, description: translate("en", app.description) } : {};
 }
 
 export default async function AppPage(props: PageProps<"/apps/[id]">) {

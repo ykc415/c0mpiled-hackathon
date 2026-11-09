@@ -10,6 +10,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { translate, type Lang, type Vars } from "./i18n";
 import { PRODUCTS, type Category } from "./products";
 
 type ProductState = { saved: boolean; liked: boolean; comments: string[] };
@@ -39,12 +40,18 @@ const EMPTY_DRAFT: RegistrationDraft = {
 
 const PRODUCTS_KEY = "indie-shorts-products-v1";
 const LIBRARY_KEY = "indie-shorts-library-v1";
+const LANG_KEY = "appetizer-lang";
 
 export type ModalState = { title: string; body: ReactNode } | null;
 
 type Store = {
   /** False when localStorage is unavailable; data then lives for this tab only. */
   persistent: boolean;
+
+  lang: Lang;
+  setLang: (lang: Lang) => void;
+  /** Translate a Korean source string into the current language. */
+  t: (ko: string, vars?: Vars) => string;
   appState: (id: string) => ProductState;
   savedCount: number;
   toggleSaved: (id: string) => boolean;
@@ -85,6 +92,7 @@ function emptyProductState(): ProductState {
 
 export function StoreProvider({ children }: { children: ReactNode }) {
   const [persistent, setPersistent] = useState(true);
+  const [lang, setLangState] = useState<Lang>("en");
   const [products, setProducts] = useState<Record<string, ProductState>>({});
   const [tried, setTried] = useState(false);
   const [records, setRecords] = useState<SampleRecord[]>([]);
@@ -119,6 +127,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       }
       const lib = JSON.parse(localStorage.getItem(LIBRARY_KEY) || "null");
       /* eslint-disable react-hooks/set-state-in-effect -- one-time hydration from localStorage */
+      if (localStorage.getItem(LANG_KEY) === "ko") setLangState("ko");
       setProducts(next);
       if (lib && typeof lib === "object") {
         setTried(lib.tried === true);
@@ -151,6 +160,21 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       setPersistent(false);
     }
   }, [loaded, products, tried, records, lastOpened]);
+
+  useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
+
+  const setLang = useCallback((next: Lang) => {
+    setLangState(next);
+    try {
+      localStorage.setItem(LANG_KEY, next);
+    } catch {
+      // Language still switches for this tab.
+    }
+  }, []);
+
+  const t = useCallback((ko: string, vars?: Vars) => translate(lang, ko, vars), [lang]);
 
   const appState = useCallback(
     (id: string) => products[id] ?? emptyProductState(),
@@ -227,6 +251,9 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
   const value: Store = {
     persistent,
+    lang,
+    setLang,
+    t,
     appState,
     savedCount,
     toggleSaved,

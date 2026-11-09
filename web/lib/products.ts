@@ -196,18 +196,24 @@ export function getProduct(id: string): Product | undefined {
   return PRODUCTS.find((p) => p.id === id);
 }
 
-/** Apps shown for a category and search query, in feed order. */
+/**
+ * Apps shown for a category and search query, in feed order.
+ * `t` adds the translated text so a query in either language matches.
+ */
 export function filterProducts(
   products: Product[],
   category: Category,
   query: string,
+  t: (ko: string) => string = (s) => s,
 ): Product[] {
   const q = query.toLowerCase().trim();
   return products.filter(
     (p) =>
       (category === "추천" || p.categories.includes(category)) &&
       (!q ||
-        `${p.name} ${p.description} ${p.categories.join(" ")}`
+        [p.name, p.description, ...p.categories]
+          .flatMap((s) => [s, t(s)])
+          .join(" ")
           .toLowerCase()
           .includes(q)),
   );

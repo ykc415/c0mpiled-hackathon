@@ -21,8 +21,8 @@ const FEED_SLIDE = { "feed-next": "feed-next", "feed-prev": "feed-prev", default
 
 export function Feed() {
   const store = useStore();
-  const { category, query, feedAppId, setFeedAppId, shot, setShot } = store;
-  const list = filterProducts(PRODUCTS, category, query);
+  const { category, query, feedAppId, setFeedAppId, shot, setShot, t } = store;
+  const list = filterProducts(PRODUCTS, category, query, t);
   const index = Math.max(0, list.findIndex((p) => p.id === feedAppId));
   const app = list[index];
   const hasApp = Boolean(app);
@@ -78,11 +78,11 @@ export function Feed() {
       <>
         <CategoryPills />
         <div className="empty">
-          <h2>{query ? "검색 결과가 없어요" : "이 카테고리의 앱은 준비 중이에요"}</h2>
+          <h2>{query ? t("검색 결과가 없어요") : t("이 카테고리의 앱은 준비 중이에요")}</h2>
           <p>
             {query
-              ? "다른 앱 이름이나 카테고리로 찾아보세요."
-              : "선택한 카테고리를 다시 누르면 필터가 해제됩니다."}
+              ? t("다른 앱 이름이나 카테고리로 찾아보세요.")
+              : t("선택한 카테고리를 다시 누르면 필터가 해제됩니다.")}
           </p>
         </div>
       </>
@@ -99,7 +99,7 @@ export function Feed() {
       <section
         ref={layoutRef}
         className={`reel-layout${image.width > image.height ? " wide-reel" : ""}`}
-        aria-label="앱 피드"
+        aria-label={t("앱 피드")}
       >
         <ViewTransition key={app.id} enter={FEED_SLIDE} exit={FEED_SLIDE} default="none">
           <div className="reel-column">
@@ -107,7 +107,7 @@ export function Feed() {
               <Link
                 className="reel-image-button"
                 href={`/apps/${app.id}`}
-                aria-label={`${app.name} 상세 보기`}
+                aria-label={t("{name} 상세 보기", { name: app.name })}
               >
                 <AppImage app={app} index={shotIndex} className="reel-image" priority />
               </Link>
@@ -117,29 +117,29 @@ export function Feed() {
                 <AppIcon app={app} />
                 <span>
                   <strong>{app.name}</strong>
-                  <small>{app.categories.join(" · ")}</small>
+                  <small>{app.categories.map((c) => t(c)).join(" · ")}</small>
                 </span>
                 <Icon name="arrow" />
               </Link>
-              <p>{app.description}</p>
+              <p>{t(app.description)}</p>
             </div>
             <div className="image-controls">
               <button
                 type="button"
                 className="text-button"
-                aria-label="이전 이미지"
+                aria-label={t("이전 이미지")}
                 disabled={!multiShot}
                 onClick={() => setShot(shotIndex === 0 ? app.images.length : shotIndex)}
               >
                 ←
               </button>
               <small>
-                {app.label} · {shotIndex + 1}/{app.images.length}
+                {t(app.label)} · {shotIndex + 1}/{app.images.length}
               </small>
               <button
                 type="button"
                 className="text-button"
-                aria-label="다음 이미지"
+                aria-label={t("다음 이미지")}
                 disabled={!multiShot}
                 onClick={() => setShot(shotIndex + 1 === app.images.length ? 1 : shotIndex + 2)}
               >
@@ -155,49 +155,49 @@ export function Feed() {
           <div className="reel-actions">
             <button
               type="button"
-              aria-label="좋아요"
+              aria-label={t("좋아요")}
               aria-pressed={liked}
               onClick={() => store.toggleLiked(app.id)}
             >
               <Icon name="heart" />
-              <span>{liked ? "좋아요 취소" : "좋아요"}</span>
+              <span>{liked ? t("좋아요 취소") : t("좋아요")}</span>
             </button>
             <button
               type="button"
               aria-pressed={saved}
               onClick={() =>
                 store.toast(
-                  store.toggleSaved(app.id) ? "내 앱에 추가했어요" : "내 앱에서 제거했어요",
+                  store.toggleSaved(app.id) ? t("내 앱에 추가했어요") : t("내 앱에서 제거했어요"),
                 )
               }
             >
               <Icon name="save" />
-              <span>{saved ? "추가됨" : "내 앱"}</span>
+              <span>{saved ? t("추가됨") : t("내 앱")}</span>
             </button>
             <button
               type="button"
               onClick={() =>
-                store.openModal("함께 나누는 한마디", <CommentsModal appId={app.id} />)
+                store.openModal(t("함께 나누는 한마디"), <CommentsModal appId={app.id} />)
               }
             >
               <Icon name="comment" />
-              <span>{comments.length || "댓글"}</span>
+              <span>{comments.length || t("댓글")}</span>
             </button>
             <button
               type="button"
               onClick={() =>
-                store.openModal(`${app.name} 공유하기`, <ShareModal appId={app.id} />)
+                store.openModal(t("{name} 공유하기", { name: app.name }), <ShareModal appId={app.id} />)
               }
             >
               <Icon name="share" />
-              <span>공유</span>
+              <span>{t("공유")}</span>
             </button>
           </div>
           <div className="reel-pager">
             <button
               type="button"
               className="icon-button"
-              aria-label="이전 앱"
+              aria-label={t("이전 앱")}
               disabled={index === 0}
               onClick={() => moveApp(-1)}
             >
@@ -209,7 +209,7 @@ export function Feed() {
             <button
               type="button"
               className="icon-button"
-              aria-label="다음 앱"
+              aria-label={t("다음 앱")}
               disabled={index === list.length - 1}
               onClick={() => moveApp(1)}
             >

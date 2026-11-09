@@ -6,7 +6,7 @@ import { Icon } from "./icon";
 
 /** Single app-wide <dialog>; content comes from the store's openModal(). */
 export function ModalHost() {
-  const { modal, closeModal } = useStore();
+  const { modal, closeModal, t } = useStore();
   const ref = useRef<HTMLDialogElement>(null);
   const returnFocus = useRef<Element | null>(null);
 
@@ -16,7 +16,7 @@ export function ModalHost() {
     if (modal && !d.open) {
       returnFocus.current = document.activeElement;
       d.showModal();
-      d.querySelector<HTMLElement>("input,textarea,button:not([aria-label='닫기'])")?.focus();
+      d.querySelector<HTMLElement>("input,textarea,button:not([data-close])")?.focus();
     } else if (!modal && d.open) {
       d.close();
       const el = returnFocus.current;
@@ -45,7 +45,8 @@ export function ModalHost() {
             <button
               type="button"
               className="icon-button"
-              aria-label="닫기"
+              aria-label={t("닫기")}
+              data-close
               onClick={closeModal}
             >
               <Icon name="close" />
