@@ -136,7 +136,8 @@ a.text-button{display:inline-flex;align-items:center}
   .reel-layout{flex-direction:column;align-items:stretch;gap:12px}
   .reel-column,.wide-reel .reel-column{width:100%;max-width:none}
   /* Tall screenshots are capped so the info, CTA and toolbar stay close by. */
-  .reel-player{width:min(100%,calc(58dvh*var(--reel-ratio,1)));margin-inline:auto}
+  /* 530px = top bar, app info, CTA, toolbar and tab bar, so the whole card fits above the tab bar. */
+  .reel-player{width:min(100%,calc(max(220px,100dvh - 530px)*var(--reel-ratio,1)));margin-inline:auto}
   .reel-side{flex-direction:row;align-items:center;justify-content:space-between;align-self:stretch;width:auto;gap:4px;padding:4px 6px;border:1px solid var(--line);border-radius:16px;background:var(--panel)}
   .reel-actions{display:flex;gap:2px}
   .reel-actions button{min-width:48px;min-height:48px;gap:3px;font-size:10px}
