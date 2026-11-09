@@ -122,6 +122,7 @@ export const PRODUCTS: Product[] = [
     categories: ["게임"],
     url: "https://store.steampowered.com/app/3438850/Sledding_Game/",
     owner: "The Sledding Corporation",
+    video: { src: "/videos/sledding-trailer.webm", width: 720, height: 406 },
     images: [
       { src: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3438850/d125d21c8c8e4ba7b50be7eb5c59cc7cb525d36a/ss_d125d21c8c8e4ba7b50be7eb5c59cc7cb525d36a.600x338.jpg", width: 600, height: 337 },
       { src: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3438850/3f78962cec25d65727608bb01341cdf4b2eb6197/ss_3f78962cec25d65727608bb01341cdf4b2eb6197.600x338.jpg", width: 600, height: 337 },
@@ -157,6 +158,7 @@ export const PRODUCTS: Product[] = [
     categories: ["AI", "SaaS", "디자인"],
     url: "https://photoai.com/",
     owner: "Photo AI · Pieter Levels",
+    video: { src: "/videos/photo-demo.webm", width: 720, height: 454 },
     images: [
       { src: "https://r2-us-west.photoai.com/public/1764406222-d9a069a0dd49e73fc90c1e80b97ca8d1-1.png", width: 896, height: 1200 },
     ],
@@ -173,6 +175,7 @@ export const PRODUCTS: Product[] = [
     categories: ["모바일 앱", "게임"],
     url: "https://apps.apple.com/us/app/tapotron-tap-games-beats/id6738282470",
     owner: "Great Scott AB",
+    video: { src: "/videos/tapotron-demo.webm", width: 720, height: 480 },
     images: [
       { src: mz("PurpleSource211/v4/13/73/3b/13733b0d-3da2-7e81-4e59-3f561ab6a901/01.jpg/320x480bb.jpg"), width: 221, height: 480 },
       { src: mz("PurpleSource221/v4/d5/e1/a6/d5e1a6f3-32a1-6524-f3f9-053c7627507a/02.jpg/320x480bb.jpg"), width: 221, height: 480 },
@@ -209,6 +212,7 @@ export const PRODUCTS: Product[] = [
     categories: ["모바일 앱"],
     url: "https://apps.apple.com/us/app/rad-weather-honest-forecast/id6758575355",
     owner: "Samuel Rozzi",
+    video: { src: "/videos/rad-intro.webm", width: 720, height: 460 },
     images: [
       { src: mz("PurpleSource211/v4/ee/b6/b8/eeb6b87b-01db-737e-10f0-02ef0a362244/image1.png/320x480bb.jpg"), width: 221, height: 480 },
       { src: mz("PurpleSource211/v4/fb/25/ba/fb25baac-8b8f-d6cb-da6b-abf9e0f94355/image2.png/320x480bb.jpg"), width: 221, height: 480 },
