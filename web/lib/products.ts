@@ -200,6 +200,24 @@ export const PRODUCTS: Product[] = [
     access: "웹사이트",
     ctaLabel: "공식 사이트 보기",
   },
+  {
+    id: "pickle",
+    trend: 58,
+    name: "Pickle",
+    description: "전화·주문·예약을 대신 해주는 나만의 AI 에이전트",
+    categories: ["AI", "모바일 앱", "생산성"],
+    url: "https://apps.apple.com/kr/app/id6795790129",
+    owner: "Pickle, Inc.",
+    images: [
+      { src: mz("PurpleSource221/v4/56/59/a6/5659a6f5-0e6c-8cb0-9b89-122323af4e90/1.png/320x480bb.jpg"), width: 221, height: 480 },
+      { src: mz("PurpleSource211/v4/4c/03/21/4c0321b0-3a82-966d-9aaf-605e2f1116e0/2.png/320x480bb.jpg"), width: 221, height: 480 },
+      { src: mz("PurpleSource211/v4/b2/08/87/b20887c1-1af9-ef4b-4521-6a1ed3a0def1/3.png/320x480bb.jpg"), width: 221, height: 480 },
+    ],
+    icon: { src: mz("Purple211/v4/2c/82/72/2c827240-6a5f-bfdb-169b-858949c74db6/AppIcon-0-0-1x_U007ephone-0-1-0-sRGB-85-220.png/512x512bb.jpg"), width: 512, height: 512 },
+    label: "공식 스크린샷",
+    access: "모바일 앱 설치",
+    ctaLabel: "앱 스토어에서 보기",
+  },
 ];
 
 export function getProduct(id: string): Product | undefined {

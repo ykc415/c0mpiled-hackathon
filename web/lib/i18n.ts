@@ -225,6 +225,8 @@ const EN: Record<string, string> = {
   "손끝으로 즐기는 피젯·미니게임·비트": "Fidgets, mini-games and beats at your fingertips",
   "항공편 상태와 여행 일정을 한눈에": "Flight status and trip plans at a glance",
   "레트로 화면으로 만나는 일기예보": "Weather forecasts on a retro screen",
+  "전화·주문·예약을 대신 해주는 나만의 AI 에이전트":
+    "Your own AI agent that makes calls, orders and bookings for you",
   "말없이 함께 앉아 쉬어가는 3D 온라인 절": "A 3D online temple where you sit and rest together in silence",
   "공식 생성 예시 · 앱 화면 아님": "Official sample output · not the app UI",
   "공식 소개 이미지": "Official promo image",
