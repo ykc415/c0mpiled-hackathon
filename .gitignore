@@ -1,0 +1,12 @@
+# 비밀값 — 절대 커밋하지 않는다
+.env
+.env.*
+!.env.example
+
+# OS / 에디터
+.DS_Store
+.idea/
+.vscode/
+
+# 의존성 / 빌드
+node_modules/
