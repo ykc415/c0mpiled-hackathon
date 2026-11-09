@@ -71,6 +71,14 @@ a.text-button{display:inline-flex;align-items:center}
 /* The action rail glides to its new spot (wide ↔ tall reels) and stays above the sliding card. */
 .reel-side{view-transition-name:reel-side}
 ::view-transition-group(reel-side){animation-duration:var(--feed-slide);animation-timing-function:var(--ease-drawer)}
+/* The rail's box changes height between wide and tall reels. Without this its snapshots are
+   stretched to the animating box and cross-fade, leaving a smeared ghost of the buttons.
+   Keep them at natural size, pinned to the bottom like the rail itself. */
+::view-transition-old(reel-side),::view-transition-new(reel-side){height:100%;object-fit:none;object-position:50% 100%}
+::view-transition-old(reel-side){animation:none;opacity:0}
+/* Keep the rail above the sliding cards; a wide card would otherwise cover it mid-slide. */
+::view-transition-group(reel-side){z-index:1}
+::view-transition-new(reel-side){animation:none}
 ::view-transition-image-pair(.feed-next),::view-transition-image-pair(.feed-prev){overflow:clip}
 ::view-transition-old(.feed-next){animation:var(--feed-slide) var(--ease-drawer) both feed-out-up}
 ::view-transition-new(.feed-next){animation:var(--feed-slide) var(--ease-drawer) both feed-in-up}
@@ -116,6 +124,9 @@ a.text-button{display:inline-flex;align-items:center}
 .feed-pills>*{min-height:0;overflow:hidden;transition:padding 250ms var(--ease-drawer),margin 250ms var(--ease-drawer)}
 .feed-pills.is-hidden{grid-template-rows:0fr;opacity:0}
 .feed-pills.is-hidden>*{padding-block:0;margin-block:0}
+/* When the categories fold during a feed slide, fold them instantly: the view transition already
+   animates the move, and a CSS transition here would land after it and make the card jump. */
+:active-view-transition .feed-pills,:active-view-transition .feed-pills>*{transition:none}
 
 /* Tall phone screenshots are capped so the info and CTA fit once the categories fold away.
    330px = header + image controls + app info + CTA. The player narrows inside the column to keep the image's ratio. */
@@ -156,3 +167,17 @@ a.text-button{display:inline-flex;align-items:center}
   .explore-search{width:100%;margin-bottom:12px}
 }
 @media(min-width:601px){.brand-row .lang-toggle{display:none}}
+
+/* The category row must not widen the page: its nowrap pills scroll inside it. Without this the
+   row sized itself to every pill, the page grew to ~1100px on phones and the tab bar fell off-screen. */
+.feed-pills{grid-template-columns:minmax(0,1fr)}
+/* margin:auto on the section makes the grid shrink-wrap it to all the pills; pin it to the track. */
+.feed-pills>*{width:100%;min-width:0}
+
+/* Tablet/desktop: size the reel from the space actually left under the top bar and categories
+   (which wrap to several rows on narrow screens), not from the viewport height.
+   224px = app info, image controls and CTA under the image. */
+@media(min-width:601px){
+  .content.is-feed>.reel-layout{min-height:0;container-type:size}
+  .reel-player{width:min(100%,calc(max(200px,100cqh - 224px)*var(--reel-ratio,1)))}
+}
