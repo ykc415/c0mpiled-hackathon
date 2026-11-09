@@ -1,0 +1,518 @@
+<!doctype html>
+<!--
+  Shots for the 90-second concept video. Each <section> is one 1920x1080 frame;
+  build.py screenshots them one by one via the URL hash (#p1, #h3, ...).
+  All products, people and posts here are fictional and illustrative.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Concept video shots</title>
+<style>
+:root{--ink:#111318;--muted:#6B7280;--faint:#C3C7CF;--line:#E6E8EC;--soft:#F6F7F9;--accent:#C6FF3D}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#fff}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Arial,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+.shot{width:1920px;height:1080px;padding:72px 120px 80px;display:flex;flex-direction:column;gap:44px;background:#fff;overflow:hidden;position:relative}
+.shot:not(:target){display:none}
+
+header{display:grid;gap:18px}
+.tag{display:flex;gap:14px;align-items:center;font-size:22px;font-weight:650;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.tag b{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--ink);color:#fff;font-size:18px;letter-spacing:0}
+h1{font-size:50px;line-height:1.15;font-weight:650;letter-spacing:-.02em;max-width:1560px}
+
+.stage{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;gap:80px}
+.col{flex-direction:column;gap:28px}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;border:1.5px solid var(--line);font-size:18px;font-weight:600;color:var(--muted);background:#fff;white-space:nowrap}
+.note{font-size:24px;color:var(--muted)}
+
+/* People and thoughts */
+.who{display:grid;justify-items:center;gap:40px}
+.person{width:180px;height:216px}
+.think{position:relative;background:#fff;border:2.5px solid var(--ink);border-radius:40px;padding:28px 44px;font-size:44px;font-weight:650;line-height:1.2;max-width:560px;text-align:center}
+.think:after{content:"";position:absolute;left:50%;bottom:-30px;width:22px;height:22px;border:2.5px solid var(--ink);border-radius:50%;background:#fff;transform:translateX(-50%)}
+
+/* Browser window mockup */
+.win{border:2px solid var(--line);border-radius:24px;overflow:hidden;background:#fff;box-shadow:0 40px 80px -40px rgba(17,19,24,.28);display:flex;flex-direction:column;position:relative}
+.win-bar{height:56px;flex:none;border-bottom:2px solid var(--line);display:flex;align-items:center;gap:10px;padding:0 22px;background:var(--soft)}
+.win-bar i{width:14px;height:14px;border-radius:50%;background:#D5D8DE}
+.url{margin-left:22px;flex:1;max-width:520px;height:32px;border-radius:9px;background:#fff;border:1.5px solid var(--line);font-size:17px;color:var(--muted);display:flex;align-items:center;padding:0 14px}
+.win-bar .chip{margin-left:auto}
+.win-body{flex:1;min-height:0;padding:28px;position:relative}
+
+/* Fictional photo tiles */
+.ph{border-radius:16px;display:grid;place-items:center;font-size:64px}
+.beach{background:linear-gradient(160deg,#BAE6FD,#FDE68A)}
+.coffee{background:linear-gradient(160deg,#FEF3C7,#D6A77A)}
+.dog{background:linear-gradient(160deg,#DCFCE7,#86EFAC)}
+.city{background:linear-gradient(160deg,#E0E7FF,#A5B4FC)}
+.food{background:linear-gradient(160deg,#FFE4E6,#FDA4AF)}
+.music{background:linear-gradient(160deg,#F3E8FF,#C4B5FD)}
+.notes{background:linear-gradient(160deg,#FEF9C3,#FDE047)}
+.map{background:linear-gradient(160deg,#CCFBF1,#5EEAD4)}
+.brand{background:linear-gradient(160deg,#111318,#374151);color:#fff;font-size:40px;font-weight:700;letter-spacing:-.01em}
+
+/* Generic content feed (problem) */
+.feed-generic{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.line{display:block;height:14px;border-radius:7px;background:#E7E9ED;margin-top:14px}
+.w80{width:80%}.w55{width:55%}
+.gcard .ph{height:170px}
+
+/* Research card */
+.research{width:1360px;border:2px solid var(--line);border-radius:32px;padding:56px 80px;display:grid;gap:22px;background:var(--soft);justify-items:start}
+.big{font-size:190px;font-weight:750;letter-spacing:-.045em;line-height:.95}
+.stmt{font-size:46px;line-height:1.22;font-weight:600;letter-spacing:-.01em}
+.src{font-size:25px;color:var(--muted);line-height:1.4}
+
+/* Product list */
+.list{width:1180px;border:2px solid var(--line);border-radius:28px;overflow:hidden;background:#fff;position:relative}
+.list-head{display:flex;justify-content:space-between;align-items:center;padding:22px 36px;font-size:24px;font-weight:650;color:var(--muted);border-bottom:2px solid var(--line)}
+.row{display:grid;grid-template-columns:72px 1fr;gap:26px;align-items:center;padding:20px 36px;border-bottom:2px solid var(--line)}
+.row:last-child{border-bottom:0}
+.row strong{display:block;font-size:31px;font-weight:650}
+.row span{font-size:24px;color:var(--muted)}
+.row.hl{background:#F7FEE7;box-shadow:inset 6px 0 0 var(--ink)}
+.row.dim{opacity:.4}
+.ico{width:72px;height:72px;border-radius:18px;display:grid;place-items:center;font-size:30px;font-weight:750;color:var(--ink)}
+.cursor{position:absolute;width:46px;height:46px;filter:drop-shadow(0 4px 6px rgba(0,0,0,.2))}
+
+/* Phone-shaped video player */
+.player{width:380px;height:676px;border-radius:40px;background:var(--ink);padding:14px;position:relative;flex:none}
+.player.sm{width:320px;height:570px;border-radius:34px;padding:12px}
+.screen{width:100%;height:100%;border-radius:28px;background:#fff;overflow:hidden;position:relative;display:flex;flex-direction:column}
+.player.sm .screen{border-radius:24px}
+.ill{position:absolute;left:50%;bottom:-48px;transform:translateX(-50%);font-size:20px;color:var(--muted);white-space:nowrap}
+.scr-title{padding:28px 24px 14px;font-size:24px;font-weight:700}
+.pick{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 20px}
+.pick .ph{height:180px;position:relative}
+.pick .ph.on:after{content:"✓";position:absolute;top:10px;right:10px;width:34px;height:34px;border-radius:50%;background:var(--ink);color:#fff;font-size:20px;font-weight:700;display:grid;place-items:center}
+.scr-foot{margin-top:auto;padding:20px 24px 26px;font-size:20px;color:var(--muted);border-top:2px solid var(--line)}
+.strip{display:flex;gap:10px;padding:0 20px}
+.strip .ph{flex:1;height:120px;font-size:44px}
+.opts{display:flex;gap:10px;padding:22px 20px 0;flex-wrap:wrap}
+.opt{padding:10px 18px;border-radius:999px;border:2px solid var(--line);font-size:19px;font-weight:600;color:var(--muted)}
+.opt.on{border-color:var(--ink);color:var(--ink);background:var(--accent)}
+.cta{margin:auto 20px 30px;height:72px;border-radius:20px;background:var(--ink);color:#fff;font-size:24px;font-weight:700;display:grid;place-items:center;position:relative}
+.tap{position:absolute;right:14px;top:50%;width:64px;height:64px;margin-top:-32px;border-radius:50%;border:4px solid var(--accent);background:rgba(198,255,61,.25)}
+.result{flex:1;display:grid;place-items:center;font-size:150px;position:relative}
+.result h3{position:absolute;left:24px;right:24px;bottom:110px;font-size:34px;line-height:1.1;color:var(--ink);font-weight:750}
+.bar{position:absolute;left:24px;right:24px;bottom:56px;height:8px;border-radius:4px;background:rgba(17,19,24,.18)}
+.bar:before{content:"";position:absolute;left:0;top:0;bottom:0;width:30%;border-radius:4px;background:var(--ink)}
+.time{position:absolute;left:24px;bottom:18px;font-size:18px;font-weight:600}
+.player.sm .result{font-size:120px}
+.player.sm .result h3{font-size:28px;bottom:96px}
+
+/* Steps beside the demo */
+.steps{list-style:none;display:grid;gap:30px}
+.steps li{display:flex;gap:26px;align-items:center;font-size:40px;font-weight:650;color:var(--faint)}
+.steps b{width:66px;height:66px;flex:none;border-radius:50%;border:2.5px solid currentColor;display:grid;place-items:center;font-size:28px}
+.steps li.done{color:var(--muted)}
+.steps li.on{color:var(--ink)}
+.steps li.on b{background:var(--accent);border-color:var(--ink)}
+
+/* Reactions */
+.bubbles{display:grid;gap:26px;justify-items:start}
+.bubble{font-size:44px;font-weight:650;padding:26px 42px;border-radius:44px;border:2.5px solid var(--ink);background:#fff}
+.bubble.old{border-color:var(--line);color:var(--muted)}
+.bubbles .chip{margin-bottom:6px}
+
+/* Hypothesis flow */
+.flow{display:grid;grid-template-columns:300px 90px 300px 90px 300px 90px 300px;align-items:center}
+.node{height:124px;border:2.5px solid var(--ink);border-radius:26px;display:grid;place-items:center;font-size:34px;font-weight:700;text-align:center;line-height:1.15;background:#fff}
+.node.hl{background:var(--accent)}
+.arr{text-align:center;font-size:46px;font-weight:300}
+.loop{width:1470px;height:96px;margin-top:-28px}
+
+/* Solution feed */
+.vfeed{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
+.vcard{display:grid;gap:14px;align-content:start}
+.vcard .ph{height:360px;position:relative;font-size:96px;border-radius:20px}
+.vcard .ph.brand{font-size:40px}
+.vcard p{font-size:21px;font-weight:600;line-height:1.3}
+.vcard.dim{opacity:.22}
+.vcard.hl .ph{outline:5px solid var(--ink);outline-offset:4px}
+.badge{position:absolute;top:14px;left:14px;padding:8px 14px;border-radius:999px;font-size:17px;font-weight:700;letter-spacing:-.01em}
+.badge.user{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+.badge.co{background:var(--ink);color:#fff;border:2px solid #fff}
+.play{position:absolute;left:16px;bottom:16px;width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,.92);display:grid;place-items:center;font-size:20px;color:var(--ink)}
+.legend{display:flex;gap:48px;justify-content:center}
+.legend div{display:flex;gap:14px;align-items:center;font-size:24px;color:var(--muted)}
+.legend .badge{position:static}
+.legend strong{color:var(--ink)}
+.callout{font-size:34px;font-weight:650;display:flex;gap:18px;align-items:center}
+.callout .badge{position:static;font-size:22px;padding:10px 18px}
+.callout span{color:var(--muted);font-weight:500}
+
+/* Product panel */
+.detail{display:grid;grid-template-columns:330px 1fr;gap:56px;align-items:center;height:100%;padding:0 30px}
+.detail .ph{height:560px;font-size:110px;position:relative;border-radius:24px}
+.panel{display:grid;gap:22px;justify-items:start}
+.panel h2{font-size:56px;font-weight:750;letter-spacing:-.02em}
+.panel p{font-size:30px;line-height:1.35;color:#374151;max-width:780px}
+.actions{display:flex;gap:16px;margin-top:10px;position:relative}
+.btn{height:72px;padding:0 34px;border-radius:18px;border:2px solid var(--line);font-size:26px;font-weight:700;display:grid;place-items:center;color:var(--ink);background:#fff}
+.btn.try{background:var(--accent);border-color:var(--ink)}
+.small{font-size:21px;color:var(--muted)}
+
+/* Trying the product */
+.tool{display:flex;align-items:center;justify-content:center;gap:56px;height:100%}
+.tool .stack{display:grid;gap:14px}
+.tool .stack .ph{width:150px;height:110px;font-size:44px}
+.tool .arrow{font-size:60px;font-weight:300}
+.tool .out{width:300px;height:500px;border-radius:24px;overflow:hidden;border:2px solid var(--line);position:relative;display:flex;flex-direction:column}
+.ready{position:absolute;top:18px;left:18px;right:18px;padding:12px 16px;border-radius:14px;background:#fff;font-size:20px;font-weight:700;display:flex;gap:10px;align-items:center;box-shadow:0 6px 16px rgba(0,0,0,.08)}
+.ready i{font-style:normal;width:28px;height:28px;border-radius:50%;background:var(--accent);border:2px solid var(--ink);display:grid;place-items:center;font-size:15px}
+
+/* Share composer */
+.overlay{position:absolute;inset:0;background:rgba(17,19,24,.42);display:grid;place-items:center}
+.composer{width:760px;background:#fff;border-radius:28px;padding:36px 40px;display:grid;gap:22px}
+.composer h3{font-size:34px;font-weight:750}
+.compose-row{display:grid;grid-template-columns:150px 1fr;gap:24px;align-items:start}
+.compose-row .ph{height:250px;font-size:64px}
+.field{border:2px solid var(--line);border-radius:18px;padding:18px 20px;font-size:25px;line-height:1.35;min-height:150px}
+.compose-foot{display:flex;justify-content:space-between;align-items:center}
+.post{height:64px;padding:0 40px;border-radius:16px;background:var(--ink);color:#fff;font-size:24px;font-weight:700;display:grid;place-items:center}
+
+/* Journey tracker under solution shots */
+.track{display:flex;gap:14px;align-items:center;font-size:24px;font-weight:650;color:var(--faint)}
+.track span{padding:8px 18px;border-radius:999px}
+.track span.done{color:var(--muted)}
+.track span.on{color:var(--ink);background:var(--accent)}
+
+/* Closing */
+.closing{justify-content:center;align-items:center;gap:26px;text-align:center}
+.closing p{font-size:76px;font-weight:700;letter-spacing:-.025em;line-height:1.1}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="person" viewBox="0 0 200 240"><circle cx="100" cy="66" r="48" fill="currentColor"/><path d="M14 236c0-58 38-96 86-96s86 38 86 96z" fill="currentColor"/></symbol>
+    <symbol id="cursor" viewBox="0 0 24 24"><path d="M5 2.5 19 11l-6.2 1.6L9.6 19z" fill="#111318" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+    <marker id="head" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#111318"/></marker>
+  </defs>
+</svg>
+
+<!-- ============ PROBLEM ============ -->
+<section id="p1" class="shot">
+  <header><div class="tag"><b>1</b>Problem</div><h1>Seeing what’s available doesn’t always show you what’s possible.</h1></header>
+  <div class="stage">
+    <div class="who">
+      <div class="think">What’s new?</div>
+      <svg class="person" style="color:var(--ink)"><use href="#person"/></svg>
+    </div>
+    <div class="win" style="width:1060px;height:590px">
+      <div class="win-bar"><i></i><i></i><i></i></div>
+      <div class="win-body feed-generic">
+        <div class="gcard"><div class="ph city">🌆</div><span class="line w80"></span><span class="line w55"></span></div>
+        <div class="gcard"><div class="ph food">🍜</div><span class="line w80"></span><span class="line w55"></span></div>
+        <div class="gcard"><div class="ph music">🎧</div><span class="line w80"></span><span class="line w55"></span></div>
+        <div class="gcard"><div class="ph map">🏔️</div><span class="line w80"></span><span class="line w55"></span></div>
+        <div class="gcard"><div class="ph coffee">☕</div><span class="line w80"></span><span class="line w55"></span></div>
+        <div class="gcard"><div class="ph dog">🐕</div><span class="line w80"></span><span class="line w55"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="p2" class="shot">
+  <header><div class="tag"><b>1</b>Problem</div><h1>Seeing what’s available doesn’t always show you what’s possible.</h1></header>
+  <div class="stage">
+    <div class="research">
+      <span class="chip">Research context · surveyed TikTok users</span>
+      <div class="big">57%</div>
+      <p class="stmt">57% of surveyed TikTok users say they discover products without actively looking for them.</p>
+      <p class="src">Source: Deloitte Digital × TikTok, <i>From Query to Cart</i>, 2026. Citing a 2025 AYTM survey.</p>
+    </div>
+  </div>
+</section>
+
+<section id="p3" class="shot">
+  <header><div class="tag"><b>1</b>Problem</div><h1>Seeing what’s available doesn’t always show you what’s possible.</h1></header>
+  <div class="stage">
+    <div class="list">
+      <div class="list-head"><span>New apps &amp; AI tools</span><span class="chip">Illustrative</span></div>
+      <div class="row"><div class="ico notes">N</div><div><strong>Notewise</strong><span>AI meeting notes · summaries · action items</span></div></div>
+      <div class="row"><div class="ico beach">S</div><div><strong>Snapreel</strong><span>Photo-to-video editor · AI templates · auto-captions</span></div></div>
+      <div class="row"><div class="ico map">T</div><div><strong>Tripkit</strong><span>Trip planner · smart itineraries · shared lists</span></div></div>
+      <div class="row"><div class="ico food">L</div><div><strong>Ledgerly</strong><span>Expense tracking · receipt scan · auto-categories</span></div></div>
+      <div class="row"><div class="ico music">V</div><div><strong>Voxa</strong><span>AI voice cleanup · noise removal · transcripts</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="p4" class="shot">
+  <header><div class="tag"><b>1</b>Problem</div><h1>Seeing what’s available doesn’t always show you what’s possible.</h1></header>
+  <div class="stage" style="gap:70px">
+    <div class="list" style="width:1000px">
+      <div class="list-head"><span>New apps &amp; AI tools</span><span class="chip">Illustrative</span></div>
+      <div class="row dim"><div class="ico notes">N</div><div><strong>Notewise</strong><span>AI meeting notes · summaries · action items</span></div></div>
+      <div class="row hl"><div class="ico beach">S</div><div><strong>Snapreel</strong><span>Photo-to-video editor · AI templates · auto-captions</span></div></div>
+      <div class="row dim"><div class="ico map">T</div><div><strong>Tripkit</strong><span>Trip planner · smart itineraries · shared lists</span></div></div>
+      <div class="row dim"><div class="ico food">L</div><div><strong>Ledgerly</strong><span>Expense tracking · receipt scan · auto-categories</span></div></div>
+      <div class="row dim"><div class="ico music">V</div><div><strong>Voxa</strong><span>AI voice cleanup · noise removal · transcripts</span></div></div>
+      <svg class="cursor" style="left:640px;top:200px"><use href="#cursor"/></svg>
+    </div>
+    <div class="who">
+      <div class="think" style="max-width:520px">What could I actually do with this?</div>
+      <svg class="person" style="color:var(--ink)"><use href="#person"/></svg>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HYPOTHESIS ============ -->
+<section id="h1" class="shot">
+  <header><div class="tag"><b>2</b>Hypothesis</div><h1>Seeing a product in action can turn curiosity into actual use.</h1></header>
+  <div class="stage" style="gap:120px">
+    <div class="player"><div class="screen">
+      <div class="scr-title">Select photos</div>
+      <div class="pick">
+        <div class="ph beach on">🏖️</div><div class="ph coffee on">☕</div>
+        <div class="ph dog on">🐕</div><div class="ph city">🌆</div>
+      </div>
+      <div class="scr-foot">3 photos selected</div>
+    </div><span class="ill">Illustrative example</span></div>
+    <ol class="steps">
+      <li class="on"><b>1</b>A few ordinary photos</li>
+      <li><b>2</b>One quick step in the tool</li>
+      <li><b>3</b>A short video, ready to share</li>
+    </ol>
+  </div>
+</section>
+
+<section id="h2" class="shot">
+  <header><div class="tag"><b>2</b>Hypothesis</div><h1>Seeing a product in action can turn curiosity into actual use.</h1></header>
+  <div class="stage" style="gap:120px">
+    <div class="player"><div class="screen">
+      <div class="scr-title">Make a video</div>
+      <div class="strip"><div class="ph beach">🏖️</div><div class="ph coffee">☕</div><div class="ph dog">🐕</div></div>
+      <div class="opts"><span class="opt">Calm</span><span class="opt on">Weekend</span><span class="opt">Upbeat</span></div>
+      <div class="cta">Create video<span class="tap"></span></div>
+    </div><span class="ill">Illustrative example</span></div>
+    <ol class="steps">
+      <li class="done"><b>1</b>A few ordinary photos</li>
+      <li class="on"><b>2</b>One quick step in the tool</li>
+      <li><b>3</b>A short video, ready to share</li>
+    </ol>
+  </div>
+</section>
+
+<section id="h3" class="shot">
+  <header><div class="tag"><b>2</b>Hypothesis</div><h1>Seeing a product in action can turn curiosity into actual use.</h1></header>
+  <div class="stage" style="gap:120px">
+    <div class="player"><div class="screen">
+      <div class="result beach">🏖️<h3>Weekend by the sea</h3><span class="bar"></span><span class="time">0:04 / 0:15</span></div>
+    </div><span class="ill">Illustrative example</span></div>
+    <ol class="steps">
+      <li class="done"><b>1</b>A few ordinary photos</li>
+      <li class="done"><b>2</b>One quick step in the tool</li>
+      <li class="on"><b>3</b>A short video, ready to share</li>
+    </ol>
+  </div>
+</section>
+
+<section id="h4" class="shot">
+  <header><div class="tag"><b>2</b>Hypothesis</div><h1>Seeing a product in action can turn curiosity into actual use.</h1></header>
+  <div class="stage" style="gap:90px">
+    <div class="player sm"><div class="screen"><div class="result beach">🏖️<h3>Weekend by the sea</h3><span class="bar"></span><span class="time">0:09 / 0:15</span></div></div><span class="ill">Illustrative example</span></div>
+    <svg class="person" style="color:var(--ink);width:150px;height:180px;align-self:center"><use href="#person"/></svg>
+    <div class="bubbles" style="width:820px">
+      <span class="chip">Illustrative thoughts</span>
+      <div class="bubble">I didn’t know that was possible.</div>
+    </div>
+  </div>
+</section>
+
+<section id="h5" class="shot">
+  <header><div class="tag"><b>2</b>Hypothesis</div><h1>Seeing a product in action can turn curiosity into actual use.</h1></header>
+  <div class="stage" style="gap:90px">
+    <div class="player sm"><div class="screen"><div class="result beach">🏖️<h3>Weekend by the sea</h3><span class="bar"></span><span class="time">0:12 / 0:15</span></div></div><span class="ill">Illustrative example</span></div>
+    <svg class="person" style="color:var(--ink);width:150px;height:180px;align-self:center"><use href="#person"/></svg>
+    <div class="bubbles" style="width:820px">
+      <span class="chip">Illustrative thoughts</span>
+      <div class="bubble old">I didn’t know that was possible.</div>
+      <div class="bubble">I want to try it.</div>
+    </div>
+  </div>
+</section>
+
+<section id="h6" class="shot">
+  <header><div class="tag"><b>2</b>Hypothesis</div><h1>Seeing a product in action can turn curiosity into actual use.</h1></header>
+  <div class="stage" style="gap:90px">
+    <div class="player sm"><div class="screen"><div class="result beach">🏖️<h3>Weekend by the sea</h3><span class="bar"></span><span class="time">0:15 / 0:15</span></div></div><span class="ill">Illustrative example</span></div>
+    <svg class="person" style="color:var(--ink);width:150px;height:180px;align-self:center"><use href="#person"/></svg>
+    <div class="bubbles" style="width:820px">
+      <span class="chip">Illustrative thoughts</span>
+      <div class="bubble old">I didn’t know that was possible.</div>
+      <div class="bubble old">I want to try it.</div>
+      <div class="bubble">What else could I discover?</div>
+    </div>
+  </div>
+</section>
+
+<section id="h7" class="shot">
+  <header><div class="tag"><b>2</b>Hypothesis</div><h1>Seeing a product in action can turn curiosity into actual use.</h1></header>
+  <div class="stage col">
+    <span class="chip" style="font-size:22px">Our hypothesis</span>
+    <div class="flow">
+      <div class="node">Curiosity</div><span class="arr">→</span>
+      <div class="node">Understanding</div><span class="arr">→</span>
+      <div class="node">First use</div><span class="arr">→</span>
+      <div class="node hl">Return<br>for more</div>
+    </div>
+    <svg class="loop" viewBox="0 0 1470 96"><path d="M1320 6 V58 Q1320 82 1296 82 H174 Q150 82 150 58 V14" fill="none" stroke="#111318" stroke-width="3" stroke-dasharray="10 10" marker-end="url(#head)"/></svg>
+    <p class="note" style="font-size:28px">“Return for more” means coming back to the discovery feed to find the next useful product.</p>
+  </div>
+</section>
+
+<!-- ============ SOLUTION ============ -->
+<section id="s1" class="shot">
+  <header><div class="tag"><b>3</b>Solution</div><h1>Discover apps and AI tools through short videos.</h1></header>
+  <div class="stage col">
+    <div class="win" style="width:1500px;height:540px">
+      <div class="win-bar"><i></i><i></i><i></i><span class="chip">Product concept</span></div>
+      <div class="win-body vfeed">
+        <div class="vcard"><div class="ph beach">🏖️<span class="badge user">User video</span><span class="play">▶</span></div><p>Turned three weekend photos into a short video</p></div>
+        <div class="vcard"><div class="ph brand">Snapreel<span class="badge co">Company video</span><span class="play">▶</span></div><p>Snapreel · Product demo</p></div>
+        <div class="vcard"><div class="ph notes">📝<span class="badge user">User video</span><span class="play">▶</span></div><p>How I use Notewise for lecture notes</p></div>
+        <div class="vcard"><div class="ph map">🗺️<span class="badge co">Company video</span><span class="play">▶</span></div><p>Tripkit · Introduction</p></div>
+      </div>
+    </div>
+    <div class="legend">
+      <div><span class="badge user">User video</span><strong>Firsthand experiences</strong>· examples · results</div>
+      <div><span class="badge co">Company video</span><strong>Introductions</strong>· demos · promos</div>
+    </div>
+  </div>
+</section>
+
+<section id="s2" class="shot">
+  <header><div class="tag"><b>3</b>Solution</div><h1>Discover apps and AI tools through short videos.</h1></header>
+  <div class="stage col">
+    <div class="win" style="width:1500px;height:540px">
+      <div class="win-bar"><i></i><i></i><i></i><span class="chip">Product concept</span></div>
+      <div class="win-body vfeed">
+        <div class="vcard hl"><div class="ph beach">🏖️<span class="badge user">User video</span><span class="play">▶</span></div><p>Turned three weekend photos into a short video</p></div>
+        <div class="vcard dim"><div class="ph brand">Snapreel<span class="badge co">Company video</span><span class="play">▶</span></div><p>Snapreel · Product demo</p></div>
+        <div class="vcard hl"><div class="ph notes">📝<span class="badge user">User video</span><span class="play">▶</span></div><p>How I use Notewise for lecture notes</p></div>
+        <div class="vcard dim"><div class="ph map">🗺️<span class="badge co">Company video</span><span class="play">▶</span></div><p>Tripkit · Introduction</p></div>
+      </div>
+    </div>
+    <div class="callout"><span class="badge user">User videos</span>Firsthand experiences, practical examples, and results</div>
+  </div>
+</section>
+
+<section id="s3" class="shot">
+  <header><div class="tag"><b>3</b>Solution</div><h1>Discover apps and AI tools through short videos.</h1></header>
+  <div class="stage col">
+    <div class="win" style="width:1500px;height:540px">
+      <div class="win-bar"><i></i><i></i><i></i><span class="chip">Product concept</span></div>
+      <div class="win-body vfeed">
+        <div class="vcard dim"><div class="ph beach">🏖️<span class="badge user">User video</span><span class="play">▶</span></div><p>Turned three weekend photos into a short video</p></div>
+        <div class="vcard hl"><div class="ph brand">Snapreel<span class="badge co">Company video</span><span class="play">▶</span></div><p>Snapreel · Product demo</p></div>
+        <div class="vcard dim"><div class="ph notes">📝<span class="badge user">User video</span><span class="play">▶</span></div><p>How I use Notewise for lecture notes</p></div>
+        <div class="vcard hl"><div class="ph map">🗺️<span class="badge co">Company video</span><span class="play">▶</span></div><p>Tripkit · Introduction</p></div>
+      </div>
+    </div>
+    <div class="callout"><span class="badge co">Company videos</span>Product introductions, demos, and promotional videos</div>
+  </div>
+</section>
+
+<section id="s4" class="shot">
+  <header><div class="tag"><b>3</b>Solution</div><h1>Discover apps and AI tools through short videos.</h1></header>
+  <div class="stage col">
+    <div class="win" style="width:1500px;height:620px">
+      <div class="win-bar"><i></i><i></i><i></i><span class="chip">Product concept</span></div>
+      <div class="win-body">
+        <div class="detail">
+          <div class="ph brand">▶<span class="badge co">Company video</span></div>
+          <div class="panel">
+            <span class="chip">Product</span>
+            <h2>Snapreel</h2>
+            <p>Turn a few photos into a short video in one step.</p>
+            <div class="actions">
+              <span class="btn">Save</span><span class="btn">Share</span><span class="btn try">Try</span><span class="btn">Buy</span>
+              <svg class="cursor" style="left:390px;top:40px"><use href="#cursor"/></svg>
+            </div>
+            <span class="small">Save and Share are optional. Go straight from watching to trying.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="track"><span class="on">Watch</span>→<span class="on">Try</span>→<span>Result</span>→<span>Share</span>→<span>Next discovery</span></div>
+  </div>
+</section>
+
+<section id="s5" class="shot">
+  <header><div class="tag"><b>3</b>Solution</div><h1>Discover apps and AI tools through short videos.</h1></header>
+  <div class="stage col">
+    <div class="win" style="width:1500px;height:620px">
+      <div class="win-bar"><i></i><i></i><i></i><span class="url">snapreel.example/try</span><span class="chip">Illustrative example</span></div>
+      <div class="win-body">
+        <div class="tool">
+          <div class="stack"><div class="ph beach">🏖️</div><div class="ph coffee">☕</div><div class="ph dog">🐕</div></div>
+          <span class="arrow">→</span>
+          <div class="btn try" style="height:84px;padding:0 44px;font-size:28px">Create video</div>
+          <span class="arrow">→</span>
+          <div class="out"><div class="result beach" style="font-size:110px">🏖️<h3 style="font-size:28px;bottom:90px">Weekend by the sea</h3><span class="bar" style="bottom:46px"></span></div><div class="ready"><i>✓</i>Your video is ready</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="track"><span class="done">Watch</span>→<span class="done">Try</span>→<span class="on">Result</span>→<span>Share</span>→<span>Next discovery</span></div>
+  </div>
+</section>
+
+<section id="s6" class="shot">
+  <header><div class="tag"><b>3</b>Solution</div><h1>Discover apps and AI tools through short videos.</h1></header>
+  <div class="stage col">
+    <div class="win" style="width:1500px;height:620px">
+      <div class="win-bar"><i></i><i></i><i></i><span class="chip">Product concept</span></div>
+      <div class="win-body vfeed">
+        <div class="vcard"><div class="ph music">🎧<span class="badge user">User video</span></div></div>
+        <div class="vcard"><div class="ph brand">Voxa<span class="badge co">Company video</span></div></div>
+        <div class="vcard"><div class="ph city">🌆<span class="badge user">User video</span></div></div>
+        <div class="vcard"><div class="ph food">🍜<span class="badge user">User video</span></div></div>
+        <div class="overlay">
+          <div class="composer">
+            <h3>Share your experience</h3>
+            <div class="compose-row">
+              <div class="ph beach">🏖️</div>
+              <div class="field">Turned three weekend photos into a short video with Snapreel.</div>
+            </div>
+            <div class="compose-foot"><span class="chip">Links to: Snapreel</span><span class="post">Post</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="track"><span class="done">Watch</span>→<span class="done">Try</span>→<span class="done">Result</span>→<span class="on">Share</span>→<span>Next discovery</span></div>
+  </div>
+</section>
+
+<section id="s7" class="shot">
+  <header><div class="tag"><b>3</b>Solution</div><h1>Discover apps and AI tools through short videos.</h1></header>
+  <div class="stage col">
+    <div style="display:flex;gap:56px;align-items:center">
+      <div class="who" style="gap:18px">
+        <svg class="person" style="color:#9CA3AF;width:150px;height:180px"><use href="#person"/></svg>
+        <span class="note">Another person’s feed</span>
+      </div>
+      <div class="win" style="width:1290px;height:600px">
+        <div class="win-bar"><i></i><i></i><i></i><span class="chip">Product concept</span></div>
+        <div class="win-body vfeed" style="grid-template-columns:repeat(3,minmax(0,1fr))">
+          <div class="vcard hl"><div class="ph beach">🏖️<span class="badge user">User video</span><span class="play">▶</span></div><p>Turned three weekend photos into a short video</p></div>
+          <div class="vcard dim"><div class="ph notes">📝<span class="badge user">User video</span><span class="play">▶</span></div><p>How I use Notewise for lecture notes</p></div>
+          <div class="vcard dim"><div class="ph map">🗺️<span class="badge co">Company video</span><span class="play">▶</span></div><p>Tripkit · Introduction</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="track"><span class="done">Watch</span>→<span class="done">Try</span>→<span class="done">Result</span>→<span class="done">Share</span>→<span class="on">Next discovery</span></div>
+  </div>
+</section>
+
+<!-- ============ CLOSING ============ -->
+<section id="end" class="shot closing">
+  <p>Discover what’s possible.</p>
+  <p>Try something new.</p>
+  <p>Come back for what’s next.</p>
+</section>
+</body>
+</html>
