@@ -218,6 +218,20 @@ export const PRODUCTS: Product[] = [
     access: "웹사이트",
     ctaLabel: "공식 사이트 보기",
   },
+  {
+    id: "aside",
+    trend: 41,
+    name: "Aside",
+    description: "웹사이트와 계정을 넘나들며 일을 대신 처리하는 AI 브라우저",
+    categories: ["AI", "생산성"],
+    url: "https://aside.com/",
+    owner: "Aside Computer Inc.",
+    images: [{ src: "https://aside.com/opengraph-image.png", width: 1200, height: 630 }],
+    icon: { src: "https://aside.com/icon.png", width: 512, height: 512 },
+    label: "공식 소개 이미지",
+    access: "데스크톱 앱 설치",
+    ctaLabel: "공식 사이트 보기",
+  },
 ];
 
 export function getProduct(id: string): Product | undefined {

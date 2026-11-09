@@ -227,6 +227,9 @@ const EN: Record<string, string> = {
   "레트로 화면으로 만나는 일기예보": "Weather forecasts on a retro screen",
   "전화·주문·예약을 대신 해주는 나만의 AI 에이전트":
     "Your own AI agent that makes calls, orders and bookings for you",
+  "웹사이트와 계정을 넘나들며 일을 대신 처리하는 AI 브라우저":
+    "An AI browser that gets real work done across your websites and accounts",
+  "데스크톱 앱 설치": "Install the desktop app",
   "말없이 함께 앉아 쉬어가는 3D 온라인 절": "A 3D online temple where you sit and rest together in silence",
   "공식 생성 예시 · 앱 화면 아님": "Official sample output · not the app UI",
   "공식 소개 이미지": "Official promo image",
