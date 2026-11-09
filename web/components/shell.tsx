@@ -12,6 +12,7 @@ import { ModalHost, Toast } from "./modal-host";
 const NAV: { href: string; label: string; icon: IconName }[] = [
   { href: "/", label: "피드", icon: "home" },
   { href: "/explore", label: "탐색", icon: "search" },
+  { href: "/trending", label: "트렌딩", icon: "trend" },
   { href: "/library", label: "내 앱", icon: "save" },
   { href: "/me", label: "마이", icon: "user" },
 ];

@@ -27,6 +27,15 @@ const EN: Record<string, string> = {
   "내 프로필": "My profile",
   나: "Me",
   "언어 바꾸기": "Change language",
+  트렌딩: "Trending",
+
+  // Trending
+  "트렌딩 데모": "Trending Demos",
+  "{n}위": "Rank {n}",
+  "체험 {n}회": "{n} tries",
+  자세히: "Detail",
+  "체험 수는 시연용 샘플이에요. 내 좋아요·저장·댓글이 바로 반영돼요.":
+    "Try counts are sample data for this demo. Your likes, saves and comments count right away.",
 
   // Categories
   "앱 카테고리": "App categories",

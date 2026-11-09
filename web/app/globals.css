@@ -90,3 +90,23 @@ a.text-button{display:inline-flex;align-items:center}
 /* Language switch in the top bar: the active language is lit. */
 .lang-toggle{display:flex;gap:8px;align-items:center;height:36px;padding:0 12px;border:1px solid var(--line);border-radius:999px;font-size:12px;font-weight:700;color:var(--muted);flex:none}
 .lang-toggle [aria-current]{color:var(--lime)}
+
+/* Trending: ranked list, top three on raised cards. */
+.trending{max-width:760px;margin:0 auto;background:var(--panel);border:1px solid var(--line);border-radius:28px;padding:24px}
+.trending h1{display:flex;align-items:center;gap:10px;font-size:24px;margin:0 0 16px 8px}
+.trending-list{display:grid;gap:8px;list-style:none;margin:0;padding:0}
+.trending-row{display:grid;grid-template-columns:32px 64px minmax(0,1fr) auto;align-items:center;gap:16px;padding:16px 20px;border-radius:24px;transition:background var(--motion)}
+.trending-list li:nth-child(-n+3) .trending-row{background:var(--raised)}
+.trending-rank{text-align:center;font-size:20px;font-weight:700;color:var(--muted)}
+.trending-thumb{width:64px;height:64px;border-radius:50%;object-fit:cover;background:var(--raised)}
+.trending-info{display:grid;justify-items:start;gap:4px;min-width:0}
+.trending-info>*{max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.trending-info strong{font-size:17px}
+.trending-info>span{color:var(--muted);font-size:14px}
+.trending-info small{margin-top:4px;padding:4px 10px;border-radius:999px;background:#ffffff12;color:var(--muted);font-size:12px;font-weight:600}
+.trending-score{display:grid;justify-items:center;gap:6px}
+.trending-score>span{display:flex;align-items:center;gap:6px;font-size:20px;font-weight:700}
+.trending-score .od-icon{--od-icon-size:20px;color:#FF7A45;margin:0}
+.trending-score small{color:var(--muted);font-size:13px;font-weight:600}
+@media(hover:hover){.trending-list li .trending-row:hover{background:#26262e}}
+@media(max-width:600px){.trending{padding:16px 8px;border-radius:20px}.trending h1{font-size:20px}.trending-row{grid-template-columns:24px 48px minmax(0,1fr) auto;gap:12px;padding:12px}.trending-thumb{width:48px;height:48px}.trending-score>span{font-size:17px}}

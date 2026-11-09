@@ -16,6 +16,8 @@ export type Product = {
   ctaLabel: string;
   /** Apps with an in-app sample experience instead of an external link. */
   hasSample?: boolean;
+  /** Sample trial count for the trending ranking (demo data, not real usage). */
+  trend: number;
 };
 
 export const CATEGORIES = [
@@ -60,6 +62,7 @@ const mz = (path: string) => `https://is1-ssl.mzstatic.com/image/thumb/${path}`;
 export const PRODUCTS: Product[] = [
   {
     id: "cal",
+    trend: 128,
     name: "Cal AI",
     description: "음식 사진으로 간편하게 식단 기록",
     categories: ["AI", "모바일 앱", "건강"],
@@ -78,6 +81,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "sledding",
+    trend: 96,
     name: "Sledding Game",
     description: "친구들과 눈밭을 누비는 멀티플레이 썰매 게임",
     categories: ["게임"],
@@ -94,6 +98,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "upscrolled",
+    trend: 61,
     name: "UpScrolled",
     description: "사진·영상·이야기를 나누는 소셜 피드",
     categories: ["모바일 앱"],
@@ -111,6 +116,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "photo",
+    trend: 52,
     name: "Photo AI",
     description: "내 사진으로 만드는 AI 프로필과 인물 사진",
     categories: ["AI", "SaaS", "디자인"],
@@ -126,6 +132,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "tapotron",
+    trend: 74,
     name: "Tapotron",
     description: "손끝으로 즐기는 피젯·미니게임·비트",
     categories: ["모바일 앱", "게임"],
@@ -143,6 +150,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "onlyflights",
+    trend: 37,
     name: "OnlyFlights",
     description: "항공편 상태와 여행 일정을 한눈에",
     categories: ["모바일 앱", "생산성"],
@@ -160,6 +168,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "rad",
+    trend: 29,
     name: "RAD Weather",
     description: "레트로 화면으로 만나는 일기예보",
     categories: ["모바일 앱"],
@@ -177,6 +186,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "sansa",
+    trend: 45,
     name: "산사",
     description: "말없이 함께 앉아 쉬어가는 3D 온라인 절",
     categories: ["메타버스"],

@@ -10,6 +10,7 @@ const PATHS = {
   home: "m3 10 9-7 9 7v11h-6v-7H9v7H3V10Z",
   user: "M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0M4 21v-3a8 8 0 0 1 16 0v3",
   plus: "M12 5v14M5 12h14",
+  trend: "m3 17 6-6 4 4 8-8m-6 0h6v6",
 } as const;
 
 export type IconName = keyof typeof PATHS;

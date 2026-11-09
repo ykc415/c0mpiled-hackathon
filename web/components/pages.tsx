@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { filterProducts, getProduct, PRODUCTS, type Product } from "@/lib/products";
@@ -85,6 +86,59 @@ export function Explore() {
         </div>
       )}
     </>
+  );
+}
+
+const MEDALS = ["🥇", "🥈", "🥉"];
+
+export function Trending() {
+  const { appState, t } = useStore();
+  // Sample trial counts plus this browser's own likes, saves and comments.
+  const list = PRODUCTS.map((app) => {
+    const s = appState(app.id);
+    return { app, score: app.trend + Number(s.liked) + Number(s.saved) + s.comments.length };
+  }).sort((a, b) => b.score - a.score);
+  return (
+    <section className="trending">
+      <h1>
+        <span aria-hidden="true">🔥</span> {t("트렌딩 데모")}
+      </h1>
+      <ol className="trending-list">
+        {list.map(({ app, score }, i) => {
+          const thumb = app.icon ?? app.images[0];
+          return (
+            <li key={app.id}>
+              <Link className="trending-row" href={`/apps/${app.id}`}>
+                <span className="trending-rank" aria-label={t("{n}위", { n: i + 1 })}>
+                  {MEDALS[i] ?? i + 1}
+                </span>
+                <Image
+                  className="trending-thumb"
+                  src={thumb.src}
+                  width={thumb.width}
+                  height={thumb.height}
+                  alt=""
+                />
+                <span className="trending-info">
+                  <strong>{app.name}</strong>
+                  <span>{t(app.description)}</span>
+                  <small>{app.categories.map((c) => t(c)).join(", ")}</small>
+                </span>
+                <span className="trending-score">
+                  <span aria-label={t("체험 {n}회", { n: score })}>
+                    <Icon name="trend" /> {score}
+                  </span>
+                  <small>{t("자세히")}</small>
+                </span>
+              </Link>
+            </li>
+          );
+        })}
+      </ol>
+      <p className="intro-note">
+        {t("체험 수는 시연용 샘플이에요. 내 좋아요·저장·댓글이 바로 반영돼요.")}
+      </p>
+    </section>
   );
 }
 
