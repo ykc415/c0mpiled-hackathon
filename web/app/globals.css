@@ -53,3 +53,4 @@ h1,h2,h3{font-weight:700}
 strong{font-weight:700}
 .registration-guide ol{list-style:decimal}
 a.text-button{display:inline-flex;align-items:center}
+.dialog{margin:auto}
