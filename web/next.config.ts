@@ -11,6 +11,7 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "shared.akamai.steamstatic.com" },
       { protocol: "https", hostname: "photoai.com" },
       { protocol: "https", hostname: "r2-us-west.photoai.com" },
+      { protocol: "https", hostname: "sansatemple.com" },
     ],
   },
   turbopack: {

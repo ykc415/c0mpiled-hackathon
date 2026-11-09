@@ -31,6 +31,7 @@ export const CATEGORIES = [
   "건강",
   "교육",
   "게임",
+  "메타버스",
   "Web3",
 ] as const;
 
@@ -48,6 +49,7 @@ export const CATEGORY_SYMBOLS: Record<Exclude<Category, "추천">, string> = {
   건강: "🏥",
   교육: "📚",
   게임: "🎮",
+  메타버스: "🪐",
   Web3: "🌐",
 };
 
@@ -172,6 +174,21 @@ export const PRODUCTS: Product[] = [
     label: "공식 스크린샷",
     access: "모바일 앱 설치",
     ctaLabel: "앱 스토어에서 보기",
+  },
+  {
+    id: "sansa",
+    name: "산사",
+    description: "말없이 함께 앉아 쉬어가는 3D 온라인 절",
+    categories: ["메타버스"],
+    url: "https://sansatemple.com/",
+    owner: "sansatemple.com",
+    images: [
+      { src: "https://sansatemple.com/og/sansa-rest-20261101-v11.png", width: 1200, height: 630 },
+    ],
+    icon: { src: "https://sansatemple.com/icon-512.png", width: 512, height: 512 },
+    label: "공식 소개 이미지",
+    access: "웹사이트",
+    ctaLabel: "공식 사이트 보기",
   },
 ];
 
