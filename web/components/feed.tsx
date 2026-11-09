@@ -3,6 +3,7 @@
 import Link from "next/link";
 import {
   addTransitionType,
+  type CSSProperties,
   startTransition,
   useEffect,
   useEffectEvent,
@@ -114,7 +115,10 @@ export function Feed() {
         aria-label={t("앱 피드")}
       >
         <ViewTransition key={app.id} enter={FEED_SLIDE} exit={FEED_SLIDE} default="none">
-          <div className="reel-column">
+          <div
+            className="reel-column"
+            style={{ "--reel-ratio": image.width / image.height } as CSSProperties}
+          >
             <div className="reel-player">
               <Link
                 className="reel-image-button"

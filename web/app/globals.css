@@ -116,3 +116,9 @@ a.text-button{display:inline-flex;align-items:center}
 .feed-pills>*{min-height:0;overflow:hidden;transition:padding 250ms var(--ease-drawer),margin 250ms var(--ease-drawer)}
 .feed-pills.is-hidden{grid-template-rows:0fr;opacity:0}
 .feed-pills.is-hidden>*{padding-block:0;margin-block:0}
+
+/* Tall phone screenshots are capped so the info and CTA fit once the categories fold away.
+   330px = header + image controls + app info + CTA. The player narrows inside the column to keep the image's ratio. */
+@media(min-width:601px){
+  .reel-player{width:min(100%,calc(max(360px,100dvh - 330px)*var(--reel-ratio,1)));margin-inline:auto}
+}
