@@ -40,7 +40,7 @@ export function Shell({ children }: { children: ReactNode }) {
 
   return (
     <>
-      <div className="shell">
+      <div className={isFeed ? "shell feed-shell" : "shell"}>
         <aside className="sidebar">
           <div className="brand-row">
             <Link className="brand" href="/" aria-label={t("Appetizer 홈")}>
