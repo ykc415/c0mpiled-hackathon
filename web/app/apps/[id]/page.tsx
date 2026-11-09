@@ -10,7 +10,7 @@ export function generateStaticParams() {
 export async function generateMetadata(props: PageProps<"/apps/[id]">): Promise<Metadata> {
   const { id } = await props.params;
   const app = getProduct(id);
-  return app ? { title: `${app.name} — Indie Shorts`, description: app.description } : {};
+  return app ? { title: `${app.name} — Appetizer`, description: app.description } : {};
 }
 
 export default async function AppPage(props: PageProps<"/apps/[id]">) {

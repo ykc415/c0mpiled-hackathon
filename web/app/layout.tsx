@@ -12,7 +12,7 @@ const pretendard = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Indie Shorts — 새로운 앱을 만나는 곳",
+  title: "Appetizer — 새로운 앱을 만나는 곳",
   description: "작은 팀의 큰 아이디어를 15초 만에 발견하고, 설치 없이 써보세요.",
 };
 

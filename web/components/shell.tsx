@@ -40,8 +40,8 @@ export function Shell({ children }: { children: ReactNode }) {
       <div className="shell">
         <aside className="sidebar">
           <div className="brand-row">
-            <Link className="brand" href="/" aria-label="Indie Shorts 홈">
-              <span className="brand-mark">↗</span>Indie Shorts
+            <Link className="brand" href="/" aria-label="Appetizer 홈">
+              <span className="brand-mark">↗</span>Appetizer
             </Link>
             <Link className="outline mobile-only" href="/register">
               앱 소개 ↗
@@ -77,7 +77,7 @@ export function Shell({ children }: { children: ReactNode }) {
             </Link>
             <p>
               작은 팀의 큰 아이디어를 만나요.
-              <br />© Indie Shorts · 인터랙티브 데모
+              <br />© Appetizer · 인터랙티브 데모
             </p>
           </div>
         </aside>
