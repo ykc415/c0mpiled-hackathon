@@ -110,3 +110,9 @@ a.text-button{display:inline-flex;align-items:center}
 .trending-score small{color:var(--muted);font-size:13px;font-weight:600}
 @media(hover:hover){.trending-list li .trending-row:hover{background:#26262e}}
 @media(max-width:600px){.trending{padding:16px 8px;border-radius:20px}.trending h1{font-size:20px}.trending-row{grid-template-columns:24px 48px minmax(0,1fr) auto;gap:12px;padding:12px}.trending-thumb{width:48px;height:48px}.trending-score>span{font-size:17px}}
+
+/* Categories fold away once the feed is scrolled, giving the reel the room it needs. */
+.feed-pills{display:grid;grid-template-rows:1fr;transition:grid-template-rows 250ms var(--ease-drawer),opacity 200ms ease}
+.feed-pills>*{min-height:0;overflow:hidden;transition:padding 250ms var(--ease-drawer),margin 250ms var(--ease-drawer)}
+.feed-pills.is-hidden{grid-template-rows:0fr;opacity:0}
+.feed-pills.is-hidden>*{padding-block:0;margin-block:0}

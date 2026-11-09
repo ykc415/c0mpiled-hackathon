@@ -7,6 +7,7 @@ import {
   useEffect,
   useEffectEvent,
   useRef,
+  useState,
   ViewTransition,
 } from "react";
 import { filterProducts, PRODUCTS } from "@/lib/products";
@@ -38,7 +39,16 @@ export function Feed() {
       setShot(1);
     });
   };
-  const onWheelMove = useEffectEvent(moveApp);
+  // Scrolling down first folds the categories away so the whole reel fits on screen;
+  // scrolling up on the first app brings them back.
+  const [pillsHidden, setPillsHidden] = useState(false);
+  const scrollFeed = (dir: number) => {
+    if (dir > 0 && !pillsHidden) return setPillsHidden(true);
+    if (dir < 0 && index === 0) return setPillsHidden(false);
+    if (dir > 0) setPillsHidden(true);
+    moveApp(dir);
+  };
+  const onWheelMove = useEffectEvent(scrollFeed);
 
   useEffect(() => {
     const el = layoutRef.current;
@@ -95,7 +105,9 @@ export function Feed() {
 
   return (
     <>
-      <CategoryPills />
+      <div className={`feed-pills${pillsHidden ? " is-hidden" : ""}`} inert={pillsHidden}>
+        <CategoryPills />
+      </div>
       <section
         ref={layoutRef}
         className={`reel-layout${image.width > image.height ? " wide-reel" : ""}`}
@@ -211,7 +223,10 @@ export function Feed() {
               className="icon-button"
               aria-label={t("다음 앱")}
               disabled={index === list.length - 1}
-              onClick={() => moveApp(1)}
+              onClick={() => {
+                setPillsHidden(true);
+                moveApp(1);
+              }}
             >
               ↓
             </button>
