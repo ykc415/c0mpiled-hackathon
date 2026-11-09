@@ -25,7 +25,7 @@
 
 
 /* Multi-product imagery preserves each official asset's complete frame. */
-.reel-player:after{display:none}.reel-image{aspect-ratio:auto;object-fit:contain;height:auto;width:100%}.feed-app-info{padding:16px 0 0}.feed-app-info p{margin-top:8px;font-size:14px;color:var(--muted)}.feed-app-info .reel-app{text-shadow:none}.feed-app-info .reel-app small{color:var(--muted)}.image-controls{display:flex;align-items:center;justify-content:space-between;gap:8px}.image-controls small{text-align:center}.image-controls button{min-width:40px}.letter-icon{background:var(--raised);color:var(--lime);display:grid;place-items:center;font-weight:800;font-size:24px;height:48px}.explore-grid{grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));align-items:start}.explore-media{display:flex;justify-content:center;align-items:center;min-height:0;height:280px;background:#16161b}.explore-media img{width:auto;max-width:100%;height:auto;max-height:280px;aspect-ratio:auto;object-fit:contain}.product-gallery{align-items:flex-start}.product-gallery button{flex:0 0 auto;max-width:100%}.product-gallery img{width:auto;height:auto;max-height:520px;max-width:100%;aspect-ratio:auto;object-fit:contain}.screenshot-large{width:auto;max-width:100%;height:auto;max-height:70dvh;object-fit:contain}.library-grid{align-items:start}@media(max-width:600px){.reel-column{width:calc(100% - 64px);max-width:340px}.wide-reel .reel-column{width:calc(100% - 64px)}.product-gallery img{max-height:400px}.explore-grid{grid-template-columns:1fr}}
+.reel-player:after{display:none}.reel-image{aspect-ratio:auto;object-fit:contain;height:auto;width:100%}.reel-column{width:clamp(260px,calc((100dvh - 340px)*.5632),380px)}.wide-reel .reel-column{width:min(720px,calc(100% - 72px))}.feed-app-info{padding:16px 0 0}.feed-app-info p{margin-top:8px;font-size:14px;color:var(--muted)}.feed-app-info .reel-app{text-shadow:none}.feed-app-info .reel-app small{color:var(--muted)}.image-controls{display:flex;align-items:center;justify-content:space-between;gap:8px}.image-controls small{text-align:center}.image-controls button{min-width:40px}.letter-icon{background:var(--raised);color:var(--lime);display:grid;place-items:center;font-weight:800;font-size:24px;height:48px}.explore-grid{grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));align-items:start}.explore-media{display:flex;justify-content:center;align-items:center;min-height:0;height:280px;background:#16161b}.explore-media img{width:auto;max-width:100%;height:auto;max-height:280px;aspect-ratio:auto;object-fit:contain}.product-gallery{align-items:flex-start}.product-gallery button{flex:0 0 auto;max-width:100%}.product-gallery img{width:auto;height:auto;max-height:520px;max-width:100%;aspect-ratio:auto;object-fit:contain}.screenshot-large{width:auto;max-width:100%;height:auto;max-height:70dvh;object-fit:contain}.library-grid{align-items:start}@media(max-width:600px){.reel-column{width:calc(100% - 64px);max-width:340px}.wide-reel .reel-column{width:calc(100% - 64px)}.product-gallery img{max-height:400px}.explore-grid{grid-template-columns:1fr}}
 
 /* ---- Next.js port additions ---- */
 [hidden]:not([hidden="until-found" i]){display:none!important}
@@ -110,18 +110,3 @@ a.text-button{display:inline-flex;align-items:center}
 .trending-score small{color:var(--muted);font-size:13px;font-weight:600}
 @media(hover:hover){.trending-list li .trending-row:hover{background:#26262e}}
 @media(max-width:600px){.trending{padding:16px 8px;border-radius:20px}.trending h1{font-size:20px}.trending-row{grid-template-columns:24px 48px minmax(0,1fr) auto;gap:12px;padding:12px}.trending-thumb{width:48px;height:48px}.trending-score>span{font-size:17px}}
-
-/* Desktop feed fills exactly one screen. The reel sizes to the height left under the header,
-   so the app info and CTA below the image never fall below the fold.
-   --reel-info: height of everything under the image (info with a 2-line description, image controls, CTA). */
-@media(min-width:601px){
-  .feed-shell{height:100dvh}
-  .feed-shell .workspace{display:flex;flex-direction:column;min-height:0}
-  .content.is-feed{flex:1;min-height:0;width:100%;display:flex;flex-direction:column}
-  .reel-stage{flex:1;min-height:0;container-type:size;display:flex;align-items:center;--reel-info:214px}
-  .reel-column{--reel-cap:380px;width:clamp(260px,calc((100cqh - var(--reel-info))*var(--reel-ratio)),var(--reel-cap))}
-  .wide-reel .reel-column{--reel-cap:720px}
-  .reel-player{width:fit-content;max-width:100%;margin-inline:auto}
-  .reel-image{width:auto;max-width:100%;max-height:max(160px,calc(100cqh - var(--reel-info)))}
-  .feed-app-info p{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
-}

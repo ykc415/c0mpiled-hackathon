@@ -3,7 +3,6 @@
 import Link from "next/link";
 import {
   addTransitionType,
-  type CSSProperties,
   startTransition,
   useEffect,
   useEffectEvent,
@@ -29,7 +28,7 @@ export function Feed() {
   const hasApp = Boolean(app);
 
   // Wheel/trackpad gestures move one app at a time, like the arrow buttons.
-  const layoutRef = useRef<HTMLDivElement>(null);
+  const layoutRef = useRef<HTMLElement>(null);
   const moveApp = (dir: number) => {
     const next = list[index + dir];
     if (!next) return;
@@ -97,132 +96,128 @@ export function Feed() {
   return (
     <>
       <CategoryPills />
-      <div ref={layoutRef} className="reel-stage">
-        <section
-          className={`reel-layout${image.width > image.height ? " wide-reel" : ""}`}
-          aria-label={t("앱 피드")}
-        >
-          <ViewTransition key={app.id} enter={FEED_SLIDE} exit={FEED_SLIDE} default="none">
-            <div
-              className="reel-column"
-              style={{ "--reel-ratio": image.width / image.height } as CSSProperties}
-            >
-              <div className="reel-player">
-                <Link
-                  className="reel-image-button"
-                  href={`/apps/${app.id}`}
-                  aria-label={t("{name} 상세 보기", { name: app.name })}
-                >
-                  <AppImage app={app} index={shotIndex} className="reel-image" priority />
-                </Link>
-              </div>
-              <div className="feed-app-info">
-                <Link className="reel-app" href={`/apps/${app.id}`}>
-                  <AppIcon app={app} />
-                  <span>
-                    <strong>{app.name}</strong>
-                    <small>{app.categories.map((c) => t(c)).join(" · ")}</small>
-                  </span>
-                  <Icon name="arrow" />
-                </Link>
-                <p>{t(app.description)}</p>
-              </div>
-              <div className="image-controls">
-                <button
-                  type="button"
-                  className="text-button"
-                  aria-label={t("이전 이미지")}
-                  disabled={!multiShot}
-                  onClick={() => setShot(shotIndex === 0 ? app.images.length : shotIndex)}
-                >
-                  ←
-                </button>
-                <small>
-                  {t(app.label)} · {shotIndex + 1}/{app.images.length}
-                </small>
-                <button
-                  type="button"
-                  className="text-button"
-                  aria-label={t("다음 이미지")}
-                  disabled={!multiShot}
-                  onClick={() => setShot(shotIndex + 1 === app.images.length ? 1 : shotIndex + 2)}
-                >
-                  →
-                </button>
-              </div>
-              <div className="reel-try">
-                <AppCta app={app} />
-              </div>
+      <section
+        ref={layoutRef}
+        className={`reel-layout${image.width > image.height ? " wide-reel" : ""}`}
+        aria-label={t("앱 피드")}
+      >
+        <ViewTransition key={app.id} enter={FEED_SLIDE} exit={FEED_SLIDE} default="none">
+          <div className="reel-column">
+            <div className="reel-player">
+              <Link
+                className="reel-image-button"
+                href={`/apps/${app.id}`}
+                aria-label={t("{name} 상세 보기", { name: app.name })}
+              >
+                <AppImage app={app} index={shotIndex} className="reel-image" priority />
+              </Link>
             </div>
-          </ViewTransition>
-          <div className="reel-side">
-            <div className="reel-actions">
+            <div className="feed-app-info">
+              <Link className="reel-app" href={`/apps/${app.id}`}>
+                <AppIcon app={app} />
+                <span>
+                  <strong>{app.name}</strong>
+                  <small>{app.categories.map((c) => t(c)).join(" · ")}</small>
+                </span>
+                <Icon name="arrow" />
+              </Link>
+              <p>{t(app.description)}</p>
+            </div>
+            <div className="image-controls">
               <button
                 type="button"
-                aria-label={t("좋아요")}
-                aria-pressed={liked}
-                onClick={() => store.toggleLiked(app.id)}
+                className="text-button"
+                aria-label={t("이전 이미지")}
+                disabled={!multiShot}
+                onClick={() => setShot(shotIndex === 0 ? app.images.length : shotIndex)}
               >
-                <Icon name="heart" />
-                <span>{liked ? t("좋아요 취소") : t("좋아요")}</span>
+                ←
               </button>
+              <small>
+                {t(app.label)} · {shotIndex + 1}/{app.images.length}
+              </small>
               <button
                 type="button"
-                aria-pressed={saved}
-                onClick={() =>
-                  store.toast(
-                    store.toggleSaved(app.id) ? t("내 앱에 추가했어요") : t("내 앱에서 제거했어요"),
-                  )
-                }
+                className="text-button"
+                aria-label={t("다음 이미지")}
+                disabled={!multiShot}
+                onClick={() => setShot(shotIndex + 1 === app.images.length ? 1 : shotIndex + 2)}
               >
-                <Icon name="save" />
-                <span>{saved ? t("추가됨") : t("내 앱")}</span>
-              </button>
-              <button
-                type="button"
-                onClick={() =>
-                  store.openModal(t("함께 나누는 한마디"), <CommentsModal appId={app.id} />)
-                }
-              >
-                <Icon name="comment" />
-                <span>{comments.length || t("댓글")}</span>
-              </button>
-              <button
-                type="button"
-                onClick={() =>
-                  store.openModal(t("{name} 공유하기", { name: app.name }), <ShareModal appId={app.id} />)
-                }
-              >
-                <Icon name="share" />
-                <span>{t("공유")}</span>
+                →
               </button>
             </div>
-            <div className="reel-pager">
-              <button
-                type="button"
-                className="icon-button"
-                aria-label={t("이전 앱")}
-                disabled={index === 0}
-                onClick={() => moveApp(-1)}
-              >
-                ↑
-              </button>
-              <span>
-                {index + 1} / {list.length}
-              </span>
-              <button
-                type="button"
-                className="icon-button"
-                aria-label={t("다음 앱")}
-                disabled={index === list.length - 1}
-                onClick={() => moveApp(1)}
-              >
-                ↓
-              </button>
+            <div className="reel-try">
+              <AppCta app={app} />
             </div>
           </div>
-        </section>
-      </div>
+        </ViewTransition>
+        <div className="reel-side">
+          <div className="reel-actions">
+            <button
+              type="button"
+              aria-label={t("좋아요")}
+              aria-pressed={liked}
+              onClick={() => store.toggleLiked(app.id)}
+            >
+              <Icon name="heart" />
+              <span>{liked ? t("좋아요 취소") : t("좋아요")}</span>
+            </button>
+            <button
+              type="button"
+              aria-pressed={saved}
+              onClick={() =>
+                store.toast(
+                  store.toggleSaved(app.id) ? t("내 앱에 추가했어요") : t("내 앱에서 제거했어요"),
+                )
+              }
+            >
+              <Icon name="save" />
+              <span>{saved ? t("추가됨") : t("내 앱")}</span>
+            </button>
+            <button
+              type="button"
+              onClick={() =>
+                store.openModal(t("함께 나누는 한마디"), <CommentsModal appId={app.id} />)
+              }
+            >
+              <Icon name="comment" />
+              <span>{comments.length || t("댓글")}</span>
+            </button>
+            <button
+              type="button"
+              onClick={() =>
+                store.openModal(t("{name} 공유하기", { name: app.name }), <ShareModal appId={app.id} />)
+              }
+            >
+              <Icon name="share" />
+              <span>{t("공유")}</span>
+            </button>
+          </div>
+          <div className="reel-pager">
+            <button
+              type="button"
+              className="icon-button"
+              aria-label={t("이전 앱")}
+              disabled={index === 0}
+              onClick={() => moveApp(-1)}
+            >
+              ↑
+            </button>
+            <span>
+              {index + 1} / {list.length}
+            </span>
+            <button
+              type="button"
+              className="icon-button"
+              aria-label={t("다음 앱")}
+              disabled={index === list.length - 1}
+              onClick={() => moveApp(1)}
+            >
+              ↓
+            </button>
+          </div>
+        </div>
+      </section>
     </>
   );
 }
