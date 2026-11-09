@@ -146,3 +146,13 @@ a.text-button{display:inline-flex;align-items:center}
   .reel-pager .icon-button{width:34px;height:34px}
   .reel-pager span{min-width:34px;text-align:center;font-size:11px}
 }
+
+/* Phones: no top bar. Search lives in Explore's own field and Profile in the tab bar;
+   the language switch sits next to the logo. */
+@media(max-width:600px){
+  .topbar{display:none}
+  .brand-row .lang-toggle{margin-left:auto;height:36px}
+  .brand-row .outline.mobile-only{margin-left:0}
+  .explore-search{width:100%;margin-bottom:12px}
+}
+@media(min-width:601px){.brand-row .lang-toggle{display:none}}

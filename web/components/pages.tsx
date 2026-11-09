@@ -34,6 +34,16 @@ export function Explore() {
   const list = filterProducts(PRODUCTS, category, query, t);
   return (
     <>
+      {/* Phones have no top bar, so Explore carries its own search field there. */}
+      <label className="search-wrap explore-search mobile-only">
+        <Icon name="search" />
+        <input
+          aria-label={t("앱 검색")}
+          placeholder={t("어떤 앱을 찾고 있나요?")}
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+      </label>
       <CategoryPills />
       <div className="explore-meta">
         <span>{query ? t("“{query}” 검색 결과", { query }) : t("모든 앱")}</span>

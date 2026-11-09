@@ -46,6 +46,16 @@ export function Shell({ children }: { children: ReactNode }) {
             <Link className="brand" href="/" aria-label={t("Appetizer 홈")}>
               <span className="brand-mark">↗</span>Appetizer
             </Link>
+            {/* Phones hide the top bar, so the language switch lives here instead. */}
+            <button
+              type="button"
+              className="lang-toggle mobile-only"
+              aria-label={t("언어 바꾸기")}
+              onClick={() => setLang(lang === "en" ? "ko" : "en")}
+            >
+              <span aria-current={lang === "en" || undefined}>EN</span>
+              <span aria-current={lang === "ko" || undefined}>한</span>
+            </button>
             <Link className="outline mobile-only" href="/register">
               {t("앱 소개 ↗")}
             </Link>
