@@ -99,10 +99,13 @@ export function Feed() {
       </>
     );
 
-  const shotIndex = Math.min(shot, app.images.length) - 1;
-  const image = app.images[shotIndex];
+  // A demo video, when the app has one, plays first; the images follow.
+  const media = app.video ? [app.video, ...app.images] : app.images;
+  const shotIndex = Math.min(shot, media.length) - 1;
+  const image = media[shotIndex];
+  const isVideo = image === app.video;
   const { liked, saved, comments } = store.appState(app.id);
-  const multiShot = app.images.length > 1;
+  const multiShot = media.length > 1;
 
   return (
     <>
@@ -125,7 +128,26 @@ export function Feed() {
                 href={`/apps/${app.id}`}
                 aria-label={t("{name} 상세 보기", { name: app.name })}
               >
-                <AppImage app={app} index={shotIndex} className="reel-image" priority />
+                {isVideo ? (
+                  <video
+                    className="reel-image"
+                    src={image.src}
+                    width={image.width}
+                    height={image.height}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    aria-label={`${app.name} · ${t("데모 영상")}`}
+                  />
+                ) : (
+                  <AppImage
+                    app={app}
+                    index={shotIndex - (app.video ? 1 : 0)}
+                    className="reel-image"
+                    priority
+                  />
+                )}
               </Link>
             </div>
             <div className="feed-app-info">
@@ -145,19 +167,19 @@ export function Feed() {
                 className="text-button"
                 aria-label={t("이전 이미지")}
                 disabled={!multiShot}
-                onClick={() => setShot(shotIndex === 0 ? app.images.length : shotIndex)}
+                onClick={() => setShot(shotIndex === 0 ? media.length : shotIndex)}
               >
                 ←
               </button>
               <small>
-                {t(app.label)} · {shotIndex + 1}/{app.images.length}
+                {isVideo ? t("데모 영상") : t(app.label)} · {shotIndex + 1}/{media.length}
               </small>
               <button
                 type="button"
                 className="text-button"
                 aria-label={t("다음 이미지")}
                 disabled={!multiShot}
-                onClick={() => setShot(shotIndex + 1 === app.images.length ? 1 : shotIndex + 2)}
+                onClick={() => setShot(shotIndex + 1 === media.length ? 1 : shotIndex + 2)}
               >
                 →
               </button>

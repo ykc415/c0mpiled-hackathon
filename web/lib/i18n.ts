@@ -233,6 +233,7 @@ const EN: Record<string, string> = {
   "말없이 함께 앉아 쉬어가는 3D 온라인 절": "A 3D online temple where you sit and rest together in silence",
   "공식 생성 예시 · 앱 화면 아님": "Official sample output · not the app UI",
   "공식 소개 이미지": "Official promo image",
+  "데모 영상": "Demo video",
   "모바일 앱 설치": "Install the mobile app",
   "Steam에서 설치": "Install on Steam",
   웹사이트: "Website",

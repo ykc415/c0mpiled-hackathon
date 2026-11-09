@@ -8,6 +8,8 @@ export type Product = {
   url: string;
   owner: string;
   images: AppImage[];
+  /** Optional demo video, shown in the feed before the images. */
+  video?: AppImage;
   icon?: AppImage;
   label: string;
   /** How the user gets the app, shown in the detail panel. */
@@ -68,6 +70,7 @@ export const PRODUCTS: Product[] = [
     categories: ["AI", "모바일 앱", "생산성"],
     url: "https://apps.apple.com/kr/app/id6795790129",
     owner: "Pickle, Inc.",
+    video: { src: "/videos/pickle-intro.webm", width: 600, height: 1298 },
     images: [
       { src: mz("PurpleSource221/v4/56/59/a6/5659a6f5-0e6c-8cb0-9b89-122323af4e90/1.png/320x480bb.jpg"), width: 221, height: 480 },
       { src: mz("PurpleSource211/v4/4c/03/21/4c0321b0-3a82-966d-9aaf-605e2f1116e0/2.png/320x480bb.jpg"), width: 221, height: 480 },
